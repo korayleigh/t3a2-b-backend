@@ -4,4 +4,22 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :timeoutable
+
+  delegated_type :userable, types: %w[ Customer Employee ]
+end
+
+module Userable
+  extend ActiveSupport::Concern
+
+  included do
+    has_one :user, as: :userable, touch: true
+  end
+end
+
+class Customer < User
+  include Userable
+end
+
+class Employee < User
+  include Userable
 end
