@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :timeoutable
 
-  delegated_type :userable, types: %w[ Customer Employee ]
+  delegated_type :userable, types: %w[Employee Customer]
 end
 
 module Userable
@@ -16,10 +16,10 @@ module Userable
   end
 end
 
-class Customer < ApplicationRecord
+class Employee < ApplicationRecord
   include Userable
 end
 
-class Employee < ApplicationRecord
+class Customer < ApplicationRecord
   include Userable
 end
