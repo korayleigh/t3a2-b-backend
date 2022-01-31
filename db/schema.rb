@@ -65,8 +65,29 @@ ActiveRecord::Schema.define(version: 2022_01_31_093407) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["userable_type", "userable_id"], name: "index_users_on_userable"
+    
+  create_table "order_items", force: :cascade do |t|
+    t.bigint "menu_item_id", null: false
+    t.bigint "order_id", null: false
+    t.integer "status"
+    t.integer "price_at_order"
+    t.text "request"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["menu_item_id"], name: "index_order_items_on_menu_item_id"
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "table"
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "menu_items", "categories"
   add_foreign_key "menu_items", "groups"
+  add_foreign_key "order_items", "menu_items"
+  add_foreign_key "order_items", "orders"
 end
