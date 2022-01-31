@@ -3,4 +3,5 @@
 class MenuItem < ApplicationRecord
   belongs_to :category
   belongs_to :group
+  has_many :orders, through: :order_items
 end
