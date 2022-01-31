@@ -16,10 +16,10 @@ module Userable
   end
 end
 
-class Employee < ApplicationRecord
+class Employee < User
   include Userable
 end
 
-class Customer < ApplicationRecord
+class Customer < User
   include Userable
 end
