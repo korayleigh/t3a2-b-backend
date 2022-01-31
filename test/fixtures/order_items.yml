@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  menu_item: one
+  order: one
+  status: 1
+  price_at_order: 1
+  request: MyText
+
+two:
+  menu_item: two
+  order: two
+  status: 1
+  price_at_order: 1
+  request: MyText
