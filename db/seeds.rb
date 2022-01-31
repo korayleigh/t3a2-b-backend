@@ -47,3 +47,7 @@ unless MenuItem.any?
   MenuItem.create(name: "Caramel Milkshake", price: 900, description: "It's a caramel milkshake", category_id: drinks_category, group_id: milkshakes_group)
   puts "created MenuItem: Caramel Milkshake"
 end
+
+unless User.any?
+  User.create(userable: Employee.new(), first_name: "Admin", last_name: "User", email: "admin@mexiqui.to", password: "reallydifficultadminpassword", password_confirmation: "reallydifficultadminpassword")
+end
