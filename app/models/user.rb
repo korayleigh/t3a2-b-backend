@@ -1,3 +1,5 @@
+
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -6,6 +8,7 @@ class User < ApplicationRecord
          :timeoutable
 
   delegated_type :userable, types: %w[Employee Customer]
+
 end
 
 module Userable
@@ -16,10 +19,12 @@ module Userable
   end
 end
 
-class Employee < User
+class Employee < ApplicationRecord
   include Userable
+  belongs_to :role
+  has_many :permissions, through: :role
 end
 
-class Customer < User
+class Customer < ApplicationRecord
   include Userable
 end

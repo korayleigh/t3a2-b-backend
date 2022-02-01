@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_31_123428) do
+ActiveRecord::Schema.define(version: 2022_02_01_052233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 2022_01_31_123428) do
   create_table "employees", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "role_id", null: false
+    t.index ["role_id"], name: "index_employees_on_role_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -70,8 +72,31 @@ ActiveRecord::Schema.define(version: 2022_01_31_123428) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
+    t.bigint "owner_id"
     t.index ["created_by_id"], name: "index_orders_on_created_by_id"
+    t.index ["owner_id"], name: "index_orders_on_owner_id"
     t.index ["updated_by_id"], name: "index_orders_on_updated_by_id"
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "permissions_roles", force: :cascade do |t|
+    t.bigint "role_id", null: false
+    t.bigint "permission_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["permission_id"], name: "index_permissions_roles_on_permission_id"
+    t.index ["role_id"], name: "index_permissions_roles_on_role_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -91,10 +116,14 @@ ActiveRecord::Schema.define(version: 2022_01_31_123428) do
     t.index ["userable_type", "userable_id"], name: "index_users_on_userable"
   end
 
+  add_foreign_key "employees", "roles"
   add_foreign_key "menu_items", "categories"
   add_foreign_key "menu_items", "groups"
   add_foreign_key "order_items", "menu_items"
   add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "users", column: "created_by_id"
+  add_foreign_key "orders", "users", column: "owner_id"
   add_foreign_key "orders", "users", column: "updated_by_id"
+  add_foreign_key "permissions_roles", "permissions"
+  add_foreign_key "permissions_roles", "roles"
 end
