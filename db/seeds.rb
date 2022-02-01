@@ -9,7 +9,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 unless Category.any?
-  categories = %w[Entrees Mains Desserts Drinks]
+  categories = %w[Entrees Tacos Mains Postres Drinks]
   categories.each do |category|
     Category.create(name: category)
     puts "created Category: #{category}"
@@ -26,22 +26,60 @@ end
 
 unless MenuItem.any?
   entree_category_id = Category.find_by(name: 'Entrees').id
-  MenuItem.create!(name: 'Bruschetta', price: 1600,
-                   description: 'Toasted sourdough brushed with olive oil and topped with our mix of chopped tomato, red onion and basil',
+  MenuItem.create!(name: 'Papas fritas', price: 1200,
+                   description: 'Crispy fried potatoes, salsa roja, maggi aioli',
                    category_id: entree_category_id)
-  MenuItem.create!(name: 'Calamari', price: 1900,
-                   description: 'Lightly battered fresh caught calamari topped with sea salt',
+  puts 'created MenuItem: Papas fritas'
+  MenuItem.create!(name: 'Chilaquiles', price: 900,
+                   description: 'Tortilla chips, salsa roja, house mix cheeses, crema',
                    category_id: entree_category_id)
+  puts 'created MenuItem: Chilaquiles'
+  MenuItem.create!(name: 'Guacamole', price: 950,
+                   description: 'Crushed avocado, tomato, onion, chile, coriander and lime juice',
+                   category_id: entree_category_id)
+  puts 'created MenuItem: Guacamole'
+
+  tacos_category_id = Category.find_by(name: 'Tacos').id
+  MenuItem.create!(name: 'Al Pastor', price: 600,
+                   description: 'Free-range spiced pork, achiote, guajillo chile, pineapple-habanero sala',
+                   category_id: tacos_category_id)
+  puts 'created MenuItem: Al Pastor'
+  MenuItem.create!(name: 'Carne Asada', price: 600,
+                   description: 'Marinated grilled beef, fresh-herb salsa',
+                   category_id: tacos_category_id)
+  puts 'created MenuItem: Carne Asada'
+  MenuItem.create!(name: 'Pescado', price: 650,
+                   description: 'Corn battered fish, jalapeño mayo, coleslaw salad, pico de gallo',
+                   category_id: tacos_category_id)
+  puts 'created MenuItem: Pescado'
+  MenuItem.create!(name: 'Tinga de Pollo', price: 600,
+                   description: 'Free-range chicken, chipotle-tomato salsa, black beans',
+                   category_id: tacos_category_id)
+  puts 'created MenuItem: Tinga de Pollo'
 
   main_category_id = Category.find_by(name: 'Mains').id
-  MenuItem.create!(name: 'Chicken Parmagiana', price: 2900,
-                   description: 'Crumbed chicken schnitzel topped with ham, tomato sauce and cheese, served with a side of fries',
+  MenuItem.create!(name: 'Carnitas', price: 4000,
+                   description: 'Wood roasted pork belly, hibiscus and plum chamoy',
                    category_id: main_category_id)
-  puts 'created MenuItem: Chicken Parmagiana'
-  MenuItem.create!(name: 'Beef Burger', price: 2400,
-                   description: 'Home made Australian farmed and grass-fed beef patty towered with cheese, tomato sauce, mustard, lettuce, tomato, red onion and pickle',
+  puts 'created MenuItem: Carnitas'
+  MenuItem.create!(name: 'Pescado a ala parrilla', price: 2400,
+                   description: 'Whole grilled flathead, ajo blanco, pistacchio crumb',
                    category_id: main_category_id)
   puts 'created MenuItem: Beef Burger'
+
+  postres_category_id = Category.find_by(name: 'Postres').id
+  MenuItem.create!(name: 'Churros', price: 1200,
+                   description: 'Churros with bourbon caramel',
+                   category_id: postres_category_id)
+  puts 'created MenuItem: Churros'
+  MenuItem.create!(name: 'Flan', price: 1000,
+                   description: 'Flan de naranja tradicional',
+                   category_id: postres_category_id)
+  puts 'created MenuItem: Flan'
+  MenuItem.create!(name: 'Pastel de elote', price: 1000,
+                   description: 'Corn cake with dulce de leche atole',
+                   category_id: postres_category_id)
+  puts 'created MenuItem: Pastel de elote'
 
   drinks_category_id = Category.find_by!(name: 'Drinks').id
   milkshakes_group_id = Group.find_by!(name: 'Milkshakes').id
