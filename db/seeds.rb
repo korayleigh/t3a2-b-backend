@@ -16,11 +16,11 @@ unless Category.any?
   end
 end
 
-unless Group.any?
-  groups = %w[Milkshakes]
-  groups.each do |group|
-    Group.create(name: group)
-    puts "created Group: #{group}"
+unless MenuGroup.any?
+  menu_groups = %w[Milkshakes]
+  menu_groups.each do |menu_group|
+    MenuGroup.create(name: menu_group)
+    puts "created Menu Group: #{menu_group}"
   end
 end
 
@@ -82,19 +82,46 @@ unless MenuItem.any?
   puts 'created MenuItem: Pastel de elote'
 
   drinks_category = Category.find_by!(name: 'Drinks')
-  milkshakes_group_id = Group.find_by!(name: 'Milkshakes')
+  milkshakes_group = MenuGroup.find_by!(name: 'Milkshakes')
 
-  MenuItem.create!(name: 'Chocolate Milkshake', price: 900, description: "It's a chocolate milkshake",
-                   category: drinks_category, group_id: milkshakes_group_id)
+  GroupMenuItem.create!(
+    menu_group: milkshakes_group,
+    menu_item: MenuItem.create!(
+      name: 'Chocolate Milkshake', price: 900,
+      description: "It's a chocolate milkshake", category: drinks_category
+    ),
+    variant_name: 'Chocolate'
+  )
   puts 'created MenuItem: Chocolate Milkshake'
-  MenuItem.create!(name: 'Strawberry Milkshake', price: 900, description: "It's a strawberry milkshake",
-                   category: drinks_category, group_id: milkshakes_group_id)
+
+  GroupMenuItem.create!(
+    menu_group: milkshakes_group,
+    menu_item: MenuItem.create!(
+      name: 'Strawberry Milkshake', price: 900,
+      description: "It's a strawberry milkshake", category: drinks_category
+    ),
+    variant_name: 'Strawberry'
+  )
   puts 'created MenuItem: Strawberry Milkshake'
-  MenuItem.create!(name: 'Banana Milkshake', price: 900, description: "It's a banana milkshake",
-                   category: drinks_category, group_id: milkshakes_group_id)
+
+  GroupMenuItem.create!(
+    menu_group: milkshakes_group,
+    menu_item: MenuItem.create!(
+      name: 'Banana Milkshake', price: 900,
+      description: "It's a banana milkshake", category: drinks_category
+    ),
+    variant_name: 'Banana'
+  )
   puts 'created MenuItem: Banana Milkshake'
-  MenuItem.create!(name: 'Caramel Milkshake', price: 900, description: "It's a caramel milkshake",
-                   category: drinks_category, group_id: milkshakes_group_id)
+
+  GroupMenuItem.create!(
+    menu_group: milkshakes_group,
+    menu_item: MenuItem.create!(
+      name: 'Caramel Milkshake', price: 900,
+      description: "It's a caramel milkshake", category: drinks_category
+    ),
+    variant_name: 'Caramel'
+  )
   puts 'created MenuItem: Caramel Milkshake'
 end
 
@@ -108,16 +135,16 @@ unless Permission.any?
 end
 
 unless Role.any?
-  #read_users_permission = Permission.find_by!(name: :read_users)
+  # read_users_permission = Permission.find_by!(name: :read_users)
   write_users_permission = Permission.find_by!(name: :write_users)
 
   read_orders_permission = Permission.find_by!(name: :read_orders)
   write_orders_permission = Permission.find_by!(name: :write_orders)
 
-  #read_menu_permission = Permission.find_by!(name: :read_menu)
+   #read_menu_permission = Permission.find_by!(name: :read_menu)
   write_menu_permission = Permission.find_by!(name: :write_menu)
 
-  
+
   admin_role = Role.create!(name: 'Admin')
   admin_role.permissions.push(write_users_permission, write_orders_permission, write_menu_permission)
   puts 'created Role: Admin'
@@ -137,26 +164,26 @@ end
 
 unless User.any?
 
-  admin_role_id = Role.find_by!(name: 'Admin')
-  User.create!(userable: Employee.new(role_id: admin_role_id),
+  admin_role = Role.find_by!(name: 'Admin')
+  User.create!(userable: Employee.new(role: admin_role),
                first_name: 'Admin', last_name: 'User', email: 'admin@mexiqui.to',
                password: 'reallydifficultadminpassword', password_confirmation: 'reallydifficultadminpassword')
   puts 'created Admin User'
 
-  manager_role_id = Role.find_by!(name: 'Manager')
-  User.create!(userable: Employee.new(role_id: manager_role_id),
+  manager_role = Role.find_by!(name: 'Manager')
+  User.create!(userable: Employee.new(role: manager_role),
                first_name: 'Manager', last_name: 'User', email: 'manager@mexiqui.to',
                password: 'reallydifficultmanagerpassword', password_confirmation: 'reallydifficultmanagerpassword')
   puts 'created Manager User'
 
-  chef_role_id = Role.find_by!(name: 'Chef')
-  User.create!(userable: Employee.new(role_id: chef_role_id),
+  chef_role = Role.find_by!(name: 'Chef')
+  User.create!(userable: Employee.new(role: chef_role),
                first_name: 'Chef', last_name: 'User', email: 'chef@mexiqui.to',
                password: 'reallydifficultchefpassword', password_confirmation: 'reallydifficultchefpassword')
   puts 'created Manager Chef'
 
-  waiter_role_id = Role.find_by!(name: 'Waiter')
-  User.create!(userable: Employee.new(role_id: waiter_role_id),
+  waiter_role = Role.find_by!(name: 'Waiter')
+  User.create!(userable: Employee.new(role: waiter_role),
                first_name: 'Waiter', last_name: 'User', email: 'waiter@mexiqui.to',
                password: 'reallydifficultwaiterpassword', password_confirmation: 'reallydifficultwaiterpassword')
   puts 'created Manager Waiter'

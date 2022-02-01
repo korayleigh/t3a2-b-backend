@@ -4,6 +4,10 @@ class MenuItemsController < ApplicationController
     render json: MenuItem.visible.map(&:transform_menu_item), status: :ok
   end
 
+  def index_grouped
+    render json: MenuItem.grouped_menu_items, status: :ok
+  end
+
   private
 
   def set_menu_item
