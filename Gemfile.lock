@@ -213,6 +213,12 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.15.1)
       parser (>= 3.0.1.1)
+    rubocop-rails (2.13.2)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 1.7.0, < 2.0)
+    rubocop-rspec (2.8.0)
+      rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
     spring (4.0.0)
     sprockets (4.0.2)
@@ -256,6 +262,8 @@ DEPENDENCIES
   rails (~> 6.1.4, >= 6.1.4.4)
   rspec-rails (~> 5.1)
   rubocop (~> 1.25)
+  rubocop-rails (~> 2.13)
+  rubocop-rspec (~> 2.8)
   spring
   tzinfo-data
 
