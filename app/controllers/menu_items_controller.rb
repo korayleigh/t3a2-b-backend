@@ -1,5 +1,6 @@
-class MenuItemsController < ApplicationController
+# frozen_string_literal: true
 
+class MenuItemsController < ApplicationController
   before_action :authenticate_user!
 
   def index

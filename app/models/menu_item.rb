@@ -31,9 +31,9 @@ class MenuItem < ApplicationRecord
     end
 
     menu_items_response_hash = MenuItem.visible.ungrouped.map do |menu_item|
-      { type: menu_item.class.name , item: menu_item.transform_menu_item }
+      { type: menu_item.class.name, item: menu_item.transform_menu_item }
     end
 
-    return menu_groups_response_hash.concat(menu_items_response_hash)
+    menu_groups_response_hash.concat(menu_items_response_hash)
   end
 end

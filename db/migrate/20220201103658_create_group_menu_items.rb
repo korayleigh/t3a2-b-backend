@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateGroupMenuItems < ActiveRecord::Migration[6.1]
   def change
     create_table :group_menu_items do |t|

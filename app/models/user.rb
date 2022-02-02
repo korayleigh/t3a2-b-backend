@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
@@ -8,9 +8,8 @@ class User < ApplicationRecord
          :timeoutable,
          # devise-jwt
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
-         
-  delegated_type :userable, types: %w[Employee Customer]
 
+  delegated_type :userable, types: %w[Employee Customer]
 end
 
 module Userable

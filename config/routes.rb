@@ -14,5 +14,4 @@ Rails.application.routes.draw do
     get '/menu', to: 'menu_items#index'
     get '/menu_grouped', to: 'menu_items#index_grouped'
   end
-
 end

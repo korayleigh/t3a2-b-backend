@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Assuming you have not yet modified this file, each configuration option below
 # is set to its default value. Note that some are commented out while others
 # are not: uncommented lines are intended to protect your configuration from
@@ -311,7 +312,7 @@ Devise.setup do |config|
   # Added 2020202 for devise-jwt setup as per https://github.com/waiting-for-dev/devise-jwt
   config.jwt do |jwt|
     jwt.secret = Rails.application.credentials.devise[:jwt_secret_key]
-    
+
     # default expiration_time is 3600 (1 hour)
     # jwt.expiration_time = 3600
   end
@@ -323,4 +324,3 @@ end
 
 require 'application_record'
 require 'user'
-
