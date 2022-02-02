@@ -64,4 +64,4 @@ jobs:
         run: bundle exec brakeman -q -w2
       - name: Lint Ruby files
         #run: bin/rubocop --parallel
-        run: bundle exec rspec --parallel
+        run: bundle exec rubocop --parallel
