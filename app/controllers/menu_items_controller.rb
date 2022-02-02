@@ -11,7 +11,24 @@ class MenuItemsController < ApplicationController
     render json: MenuItem.grouped_menu_items, status: :ok
   end
 
+  def create
+    @menu_item = MenuItem.new
+  end
+  
+
   private
+
+  def menu_item_params
+    params.require(:menu_item).permit(:id, :name, :price, :description, :category_id)
+  end
+
+  # "id": 10,
+  # "name": "Churros",
+  # "price": 1200,
+  # "description": "Churros with bourbon caramel",
+  # "category_id": 4,
+  # "category": "Postres"
+  
 
   def set_menu_item
     @menu_item = Menu.find(params[:id])
