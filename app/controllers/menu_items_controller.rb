@@ -34,6 +34,10 @@ class MenuItemsController < ApplicationController
     render json: @menu_item.transform_menu_item
   end
 
+  def create
+    @menu_item = MenuItem.new
+  end
+
   private
 
   def menu_item_params
