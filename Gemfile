@@ -51,3 +51,7 @@ gem 'rspec-rails', '~> 5.1', groups: %i[development test]
 gem 'rack-cors', '~> 1.1'
 
 gem 'rubocop', '~> 1.25'
+
+gem "bundle-audit", "~> 0.1.0"
+
+gem "brakeman", "~> 5.2"
