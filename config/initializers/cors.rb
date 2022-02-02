@@ -22,6 +22,5 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
              methods: %i[get post put patch delete options head],
              # Required for the jwt to be available to the client
              expose: ['Authorization']
-
   end
 end
