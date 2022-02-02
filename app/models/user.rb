@@ -5,8 +5,10 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :timeoutable
-
+         :timeoutable,
+         # devise-jwt
+         :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
+         
   delegated_type :userable, types: %w[Employee Customer]
 
 end

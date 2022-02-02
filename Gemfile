@@ -46,6 +46,7 @@ gem 'devise-jwt', '~> 0.9.0'
 
 gem 'aws-sdk-s3', '~> 1.111'
 
-gem 'cors', '~> 1.0'
 
 gem "rspec-rails", "~> 5.1", :groups => [:development, :test]
+
+gem "rack-cors", "~> 1.1"

@@ -307,7 +307,20 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
+
+  # Added 2020202 for devise-jwt setup as per https://github.com/waiting-for-dev/devise-jwt
+  config.jwt do |jwt|
+    jwt.secret = Rails.application.credentials.devise[:jwt_secret_key]
+    
+    # default expiration_time is 3600 (1 hour)
+    # jwt.expiration_time = 3600
+  end
 end
 
+# Added 20200201 to prevent occasional error "TypeError: superclass mismatch for class Employee"
+# Which may have something to do with the fact that the model used for devise (User) is also being delegated
+# and used in multiple table inheritence
 
+require 'application_record'
 require 'user'
+

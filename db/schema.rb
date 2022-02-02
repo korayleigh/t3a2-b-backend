@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_01_105519) do
+ActiveRecord::Schema.define(version: 2022_02_02_012956) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,12 @@ ActiveRecord::Schema.define(version: 2022_02_01_105519) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["menu_group_id"], name: "index_group_menu_items_on_menu_group_id"
     t.index ["menu_item_id"], name: "index_group_menu_items_on_menu_item_id", unique: true
+  end
+
+  create_table "jwt_denylist", force: :cascade do |t|
+    t.string "jti", null: false
+    t.datetime "exp", null: false
+    t.index ["jti"], name: "index_jwt_denylist_on_jti"
   end
 
   create_table "menu_groups", force: :cascade do |t|
