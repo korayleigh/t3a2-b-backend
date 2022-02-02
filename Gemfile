@@ -50,3 +50,5 @@ gem 'aws-sdk-s3', '~> 1.111'
 gem "rspec-rails", "~> 5.1", :groups => [:development, :test]
 
 gem "rack-cors", "~> 1.1"
+
+gem "rubocop", "~> 1.25"
