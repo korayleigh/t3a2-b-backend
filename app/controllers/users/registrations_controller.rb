@@ -10,9 +10,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    # super
+    if User.find_by(email: params[:email])
+      render json: { error: 'User already exists' }, status: :unprocessable_entity
+      return
+    end
+    @user = User.create!(customer_params.merge(userable: Customer.new))
+  end
 
   # GET /resource/edit
   # def edit
@@ -60,7 +65,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
 
-
   # copied from https://medium.com/ruby-daily/a-devise-jwt-tutorial-for-authenticating-users-in-ruby-on-rails-ca214898318e
   private
 
@@ -75,7 +79,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def register_failed
-    render json: { message: "Something went wrong." }
+    render json: { message: 'Something went wrong.' }
   end
 
+  def customer_params
+    puts params
+    params.require(:registration).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+  end
 end
