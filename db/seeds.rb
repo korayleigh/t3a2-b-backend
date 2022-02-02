@@ -141,9 +141,8 @@ unless Role.any?
   read_orders_permission = Permission.find_by!(name: :read_orders)
   write_orders_permission = Permission.find_by!(name: :write_orders)
 
-   #read_menu_permission = Permission.find_by!(name: :read_menu)
+  # read_menu_permission = Permission.find_by!(name: :read_menu)
   write_menu_permission = Permission.find_by!(name: :write_menu)
-
 
   admin_role = Role.create!(name: 'Admin')
   admin_role.permissions.push(write_users_permission, write_orders_permission, write_menu_permission)
@@ -191,7 +190,7 @@ unless User.any?
 end
 
 unless Order.any?
-  first_order = Order.new(table: 0, name: "Bob", email: "bob@test.com")
+  first_order = Order.new(table: 0, name: 'Bob', email: 'bob@test.com')
   first_order.menu_items.push(MenuItem.find_by!(name: 'Papas fritas'))
   first_order.menu_items.push(MenuItem.find_by!(name: 'Tinga de Pollo'))
   first_order.menu_items.push(MenuItem.find_by!(name: 'Churros'))

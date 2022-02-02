@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Order < ApplicationRecord
   has_many :order_items
   has_many :menu_items, through: :order_items
-  belongs_to :owner, class_name: "User", optional: true
-  belongs_to :created_by, class_name: "User", optional: true
-  belongs_to :updated_by, class_name: "User", optional: true
+  belongs_to :owner, class_name: 'User', optional: true
+  belongs_to :created_by, class_name: 'User', optional: true
+  belongs_to :updated_by, class_name: 'User', optional: true
   enum table: {
     TakeAway: 0,
     Table1: 1,
