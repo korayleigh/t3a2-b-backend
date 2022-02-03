@@ -27,7 +27,7 @@ class Order < ApplicationRecord
   end
 
   def transform_order
-    {
+    [id, {
       id: id,
       table: table,
       name: name,
@@ -36,6 +36,6 @@ class Order < ApplicationRecord
       created_by: created_by&.name,
       updated_by: updated_by&.name,
       total: total_dollars
-    }
+    }]
   end
 end

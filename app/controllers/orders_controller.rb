@@ -8,16 +8,14 @@ class OrdersController < ApplicationController
   end
 
   def show
-    if @order
-      render json: @order.transform_order, status: :ok
-    else
-      render json: { error: 'Order not found' }, staus: :unprocessable_entity
-    end
+    render json: @order.transform_order, status: :ok
   end
 
   private
 
   def set_order
     @order = Order.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Not Found' }, status: :not_found
   end
 end
