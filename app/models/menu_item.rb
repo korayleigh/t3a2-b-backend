@@ -15,6 +15,10 @@ class MenuItem < ApplicationRecord
   scope :visible, -> { where(visible: true).joins(:category).order('name ASC') }
   scope :ungrouped, -> { where.missing(:group_menu_item) }
 
+  def price_dollars
+    price / 100.0
+  end
+
   def transform_menu_item
     {
       id: id,

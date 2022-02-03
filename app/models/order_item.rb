@@ -10,4 +10,8 @@ class OrderItem < ApplicationRecord
     in_progress: 1,
     complete: 2
   }
+
+  def price_at_order_dollars
+    price_at_order / 100.0
+  end
 end
