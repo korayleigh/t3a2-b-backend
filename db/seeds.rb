@@ -26,10 +26,10 @@ end
 
 unless MenuItem.any?
   entree_category = Category.find_by!(name: 'Entrees')
-  MenuItem.create!(name: 'Papas fritas', price: 1200,
+  MenuItem.create!(name: 'Papas Fritas', price: 1200,
                    description: 'Crispy fried potatoes, salsa roja, maggi aioli',
                    category: entree_category)
-  puts 'created MenuItem: Papas fritas'
+  puts 'created MenuItem: Papas Fritas'
   MenuItem.create!(name: 'Chilaquiles', price: 900,
                    description: 'Tortilla chips, salsa roja, house mix cheeses, crema',
                    category: entree_category)
@@ -190,10 +190,21 @@ unless User.any?
 end
 
 unless Order.any?
-  first_order = Order.new(table: 0, name: 'Bob', email: 'bob@test.com')
-  first_order.menu_items.push(MenuItem.find_by!(name: 'Papas fritas'))
-  first_order.menu_items.push(MenuItem.find_by!(name: 'Tinga de Pollo'))
-  first_order.menu_items.push(MenuItem.find_by!(name: 'Churros'))
+  first_order = Order.create!(table: 0, name: 'Bob', email: 'bob@test.com')
+  puts 'created a new Order'
+
+  papas_fritas_menu_item = MenuItem.find_by!(name: 'Papas Fritas')
+  OrderItem.create!(order: first_order, menu_item: papas_fritas_menu_item, price_at_order: papas_fritas_menu_item.price)
+  puts 'added Papas Fritas to this order'
+
+  tinga_de_pollo_menu_item = MenuItem.find_by!(name: 'Tinga de Pollo')
+  OrderItem.create!(order: first_order, menu_item: tinga_de_pollo_menu_item, price_at_order: tinga_de_pollo_menu_item.price)
+  puts 'added Tinga de Pollo to this order'
+
+  churros_menu_item = MenuItem.find_by!(name: 'Churros')
+  OrderItem.create!(order: first_order, menu_item: churros_menu_item, price_at_order: churros_menu_item.price)
+  puts 'added Churros to this order'
   first_order.save!
+
   first_order.update!(updated_by: User.employees.find_by(first_name: 'Manager'))
 end
