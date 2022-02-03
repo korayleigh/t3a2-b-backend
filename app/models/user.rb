@@ -12,6 +12,10 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
   delegated_type :userable, types: %w[Employee Customer]
+
+  def name
+    "#{first_name} #{last_name}"
+  end
 end
 
 module Userable
