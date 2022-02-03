@@ -11,7 +11,18 @@ class OrderItem < ApplicationRecord
     complete: 2
   }
 
-  def price_at_order_dollars
-    price_at_order / 100.0
+  def transform_order_item
+    {
+      id: id,
+      menu_item_id: menu_item_id,
+      status: status,
+      price_at_order: price_at_order,
+      quantity: quantity,
+      request: request
+    }
+  end
+
+  def transform_order_item_list
+    [id, transform_order_item]
   end
 end

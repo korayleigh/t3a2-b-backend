@@ -8,6 +8,10 @@ class Order < ApplicationRecord
   belongs_to :created_by, class_name: 'User', optional: true
   belongs_to :updated_by, class_name: 'User', optional: true
 
+  validates :table, presence: true
+  validates :name, presence: true
+  validates :email, presence: true
+
   enum table: {
     TakeAway: 0,
     Table1: 1,
@@ -22,12 +26,8 @@ class Order < ApplicationRecord
     order_items.sum('price_at_order * quantity')
   end
 
-  def total_dollars
-    total / 100.0
-  end
-
   def transform_order
-    [id, {
+    {
       id: id,
       table: table,
       name: name,
@@ -35,7 +35,12 @@ class Order < ApplicationRecord
       owner: owner&.name,
       created_by: created_by&.name,
       updated_by: updated_by&.name,
-      total: total_dollars
-    }]
+      total: total,
+      order_items: order_items.to_h(&:transform_order_item_list)
+    }
+  end
+
+  def transform_order_list
+    [id, transform_order]
   end
 end
