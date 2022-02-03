@@ -15,10 +15,6 @@ class MenuItem < ApplicationRecord
   scope :visible, -> { where(visible: true).joins(:category).order('name ASC') }
   scope :ungrouped, -> { where.missing(:group_menu_item) }
 
-  def price_dollars
-    price / 100.0
-  end
-
   def transform_menu_item
     {
       id: id,
@@ -31,14 +27,7 @@ class MenuItem < ApplicationRecord
   end
 
   def transform_menu_item_list
-    [id, {
-      # id: id,
-      name: name,
-      price: price,
-      description: description,
-      category_id: category_id,
-      category: category.name
-    }]
+    [id, transform_menu_item]
   end
 
   def self.grouped_menu_items
