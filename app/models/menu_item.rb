@@ -7,6 +7,11 @@ class MenuItem < ApplicationRecord
   has_many :order_items
   has_many :orders, through: :order_items
 
+  validates :name, presence: true
+  validates :price, presence: true
+  validates :description, presence: true
+  validates :category_id, presence: true
+
   scope :visible, -> { where(visible: true).joins(:category).order('name ASC') }
   scope :ungrouped, -> { where.missing(:group_menu_item) }
 

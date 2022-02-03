@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   scope '/api' do
     get '/menu', to: 'menu_items#index'
     get '/menu_grouped', to: 'menu_items#index_grouped'
-    post '/menu_item', to 'menu_items#create'
+    post '/menu_items', to: 'menu_items#create'
+    put '/menu_items/:id', to: 'menu_items#update'
   end
 end
