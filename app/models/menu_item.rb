@@ -30,6 +30,17 @@ class MenuItem < ApplicationRecord
     }
   end
 
+  def transform_menu_item_list
+    [id, {
+      # id: id,
+      name: name,
+      price: price,
+      description: description,
+      category_id: category_id,
+      category: category.name
+    }]
+  end
+
   def self.grouped_menu_items
     menu_groups_response_hash = MenuGroup.all.map do |menu_group|
       menu_group_hash = menu_group.group_menu_items.visible.to_h do |group_menu_item|

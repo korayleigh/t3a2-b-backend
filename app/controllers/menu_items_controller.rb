@@ -2,10 +2,10 @@
 
 class MenuItemsController < ApplicationController
   # before_action :authenticate_user!
-  before_action :set_menu_item, only: [:update]
+  before_action :set_menu_item, only: [:show, :update]
 
   def index
-    render json: MenuItem.visible.map(&:transform_menu_item), status: :ok
+    render json: MenuItem.visible.to_h(&:transform_menu_item_list), status: :ok
   end
 
   def index_grouped
@@ -30,6 +30,8 @@ class MenuItemsController < ApplicationController
     else
       render json: @menu_item, status: 201
     end
+  def show
+    render json: @menu_item.transform_menu_item
   end
 
   private
