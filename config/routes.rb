@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   scope '/api' do
     get '/menu', to: 'menu_items#index'
     get '/menu_grouped', to: 'menu_items#index_grouped'
+    get '/menu/:id', to: 'menu_items#show'
     get '/order/:id', to: 'orders#show'
     get '/orders', to: 'orders#index'
   end
