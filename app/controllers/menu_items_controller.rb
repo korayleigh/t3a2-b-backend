@@ -36,7 +36,7 @@ class MenuItemsController < ApplicationController
 
   def create
     @menu_item = MenuItem.create(menu_item_params)
-
+    
     if @menu_item.errors.any?
       render json: @menu_item.errors, status: :unprocessable_entity
     else
@@ -53,6 +53,7 @@ class MenuItemsController < ApplicationController
       render json: @menu_item, status: 201
     end
   end
+  
 
   private
 

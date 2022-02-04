@@ -58,5 +58,3 @@ gem 'brakeman', '~> 5.2'
 
 gem 'rubocop-rails', '~> 2.13'
 gem 'rubocop-rspec', '~> 2.8'
-
-gem 'rexml'
