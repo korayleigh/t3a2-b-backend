@@ -2,7 +2,7 @@
 
 class MenuItemsController < ApplicationController
   # before_action :authenticate_user!
-  before_action :set_menu_item, only: [:show, :update]
+  before_action :set_menu_item, only: [:show, :update, :destroy]
 
   def index
     render json: MenuItem.visible.to_h(&:transform_menu_item_list), status: :ok
@@ -53,6 +53,12 @@ class MenuItemsController < ApplicationController
       render json: @menu_item, status: 201
     end
   end
+
+  def destroy
+    @menu_item.destroy
+    render status: :no_content
+  end
+  
 
   private
 

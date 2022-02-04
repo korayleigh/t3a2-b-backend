@@ -20,5 +20,6 @@ Rails.application.routes.draw do
     resources :orders, only: %i[index show create update destroy]
     post '/menu_items', to: 'menu_items#create', as: 'new_menu_item'
     put '/menu_items/:id', to: 'menu_items#update', as: 'edit_menu_item'
+    delete '/menu_items/:id', to: 'menu_items#destroy', as: 'destroy_menu_item'
   end
 end
