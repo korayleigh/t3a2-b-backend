@@ -17,6 +17,6 @@ Rails.application.routes.draw do
     put '/menu_items/:id', to: 'menu_items#update', as: 'edit_menu_item'
     get '/menu/:id', to: 'menu_items#show'
     get '/menu_grouped', to: 'menu_items#index_grouped'
-    resources :orders, only: %i[index show create update destroy  ]
+    resources :orders, only: %i[index show create update destroy]
   end
 end
