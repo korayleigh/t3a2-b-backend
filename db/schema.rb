@@ -12,12 +12,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_220_202_012_956) do
+ActiveRecord::Schema.define(version: 20_220_203_010_749) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
   create_table 'categories', force: :cascade do |t|
-    t.string 'name'
+    t.string 'name', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
   end
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20_220_202_012_956) do
   end
 
   create_table 'menu_groups', force: :cascade do |t|
-    t.string 'name'
+    t.string 'name', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
   end
@@ -70,19 +70,20 @@ ActiveRecord::Schema.define(version: 20_220_202_012_956) do
   create_table 'order_items', force: :cascade do |t|
     t.bigint 'menu_item_id', null: false
     t.bigint 'order_id', null: false
-    t.integer 'status'
-    t.integer 'price_at_order'
+    t.integer 'status', default: 0, null: false
+    t.integer 'price_at_order', null: false
     t.text 'request'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
+    t.integer 'quantity', default: 1, null: false
     t.index ['menu_item_id'], name: 'index_order_items_on_menu_item_id'
     t.index ['order_id'], name: 'index_order_items_on_order_id'
   end
 
   create_table 'orders', force: :cascade do |t|
-    t.integer 'table'
-    t.string 'name'
-    t.string 'email'
+    t.integer 'table', null: false
+    t.string 'name', null: false
+    t.string 'email', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.bigint 'created_by_id'
@@ -122,10 +123,10 @@ ActiveRecord::Schema.define(version: 20_220_202_012_956) do
     t.datetime 'remember_created_at'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
-    t.string 'userable_type'
-    t.bigint 'userable_id'
-    t.string 'first_name'
-    t.string 'last_name'
+    t.string 'userable_type', null: false
+    t.bigint 'userable_id', null: false
+    t.string 'first_name', null: false
+    t.string 'last_name', null: false
     t.index ['email'], name: 'index_users_on_email', unique: true
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
     t.index %w[userable_type userable_id], name: 'index_users_on_userable'

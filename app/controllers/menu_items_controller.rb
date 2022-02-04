@@ -30,28 +30,6 @@ class MenuItemsController < ApplicationController
     else
       render json: @menu_item, status: 201
     end
-  def show
-    render json: @menu_item.transform_menu_item
-  end
-
-  def create
-    @menu_item = MenuItem.create(menu_item_params)
-
-    if @menu_item.errors.any?
-      render json: @menu_item.errors, status: :unprocessable_entity
-    else
-      render json: @menu_item, status: 201
-    end
-  end
-
-  def update
-    @menu_item.update(menu_item_params)
-
-    if @menu_item.errors.any?
-      render json: @menu_item.errors, status: :unprocessable_entity
-    else
-      render json: @menu_item, status: 201
-    end
   end
 
   def destroy
