@@ -12,8 +12,11 @@ Rails.application.routes.draw do
 
   scope '/api' do
     get '/menu', to: 'menu_items#index'
-    get '/menu/:id', to: 'menu_items#show'
+<<<<<<< HEAD
+=======
     get '/menu_grouped', to: 'menu_items#index_grouped'
+>>>>>>> c2a262b (fixed post rebase/merge oddities)
+    get '/menu/:id', to: 'menu_items#show'
     resources :orders, only: %i[index show create update destroy]
     post '/menu_items', to: 'menu_items#create', as: 'new_menu_item'
     put '/menu_items/:id', to: 'menu_items#update', as: 'edit_menu_item'
