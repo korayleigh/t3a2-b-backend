@@ -35,6 +35,7 @@ class Order < ApplicationRecord
       name: name,
       email: email,
       total: total,
+      created_at: created_at,
       order_items: order_items.to_h(&:transform_order_item_list)
     }
     order_hash.merge({ owner: owner.name }) if owner
