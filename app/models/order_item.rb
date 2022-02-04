@@ -8,7 +8,7 @@ class OrderItem < ApplicationRecord
   validates :quantity, presence: true
   validates :price_at_order, presence: true
 
-  before_validation :order_item_price_at_order
+  before_validation :insert_price_at_order
 
   enum status: {
     cancelled: -1,
@@ -33,7 +33,7 @@ class OrderItem < ApplicationRecord
     [id, transform_order_item]
   end
 
-  def order_item_price_at_order
+  def insert_price_at_order
     self.price_at_order = MenuItem.find(menu_item_id).price unless price_at_order
   end
 end

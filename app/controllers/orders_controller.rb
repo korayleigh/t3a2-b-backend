@@ -1,24 +1,29 @@
 # frozen_string_literal: true
 
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show]
+  before_action :set_order, only: %i[show update destroy]
 
   def index
     render json: Order.all.to_h(&:transform_order_list), status: :ok
   end
 
   def show
-    render json: @order.transform_order, status: :ok
+    render_json
   end
 
   def create
     @order = Order.create(order_params)
+    render_json
+  end
 
-    if @order.errors.any?
-      render json: @order.errors, status: :unprocessable_entity
-    else
-      render json: @order.transform_order, status: :ok
-    end
+  def update
+    @order.update(order_params)
+    render_json
+  end
+
+  def destroy
+    @order.destroy
+    render status: :no_content
   end
 
   private
@@ -30,6 +35,14 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:table, :name, :email, order_items_attributes: %i[id menu_item_id quantity])
+    params.require(:order).permit(:id,  :table, :name, :email, order_items_attributes: %i[id menu_item_id quantity])
+  end
+
+  def render_json
+    if @order.errors.any?
+      render json: @order.errors, status: :unprocessable_entity
+    else
+      render json: @order.transform_order, status: :ok
+    end
   end
 end
