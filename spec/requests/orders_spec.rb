@@ -86,8 +86,6 @@ RSpec.describe 'Order', type: :request do
 
     it 'contains the new order' do
       post '/api/orders', params: new_order_json, headers: headers
-      pp new_order
-
       expect(response.body).to match(new_order_regex)
     end
   end
