@@ -25,7 +25,7 @@ RSpec.describe 'Order', type: :request do
         name: 'Banana',
         email: 'test@test.com',
         table: 3,
-        order_items_attributbes: [
+        order_items_attributes: [
           {
             menu_item_id: MenuItem.find_by(name: 'Guacamole').id,
             quantity: 2
@@ -86,6 +86,8 @@ RSpec.describe 'Order', type: :request do
 
     it 'contains the new order' do
       post '/api/orders', params: new_order_json, headers: headers
+      pp new_order
+
       expect(response.body).to match(new_order_regex)
     end
   end
