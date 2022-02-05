@@ -70,26 +70,22 @@ RSpec.describe 'Order', type: :request do
       /x
     end
 
-    let(:params) do
-      new_order_json
-    end
-
     let(:headers) do
       { 'CONTENT_TYPE' => 'application/json' }
     end
 
     it 'responds with content type: application/json' do
-      post '/api/orders', params: params, headers: headers
+      post '/api/orders', params: new_order_json, headers: headers
       expect(response.content_type).to eq('application/json; charset=utf-8')
     end
 
     it 'has status 200 OK' do
-      post '/api/orders', params: params, headers: headers
+      post '/api/orders', params: new_order_json, headers: headers
       expect(response).to have_http_status(:ok)
     end
 
     it 'contains the new order' do
-      post '/api/orders', params: params, headers: headers
+      post '/api/orders', params: new_order_json, headers: headers
       expect(response.body).to match(new_order_regex)
     end
   end
