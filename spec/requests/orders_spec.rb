@@ -17,6 +17,11 @@ RSpec.describe 'Order', type: :request do
       get '/api/orders', headers: headers
       expect(response).to have_http_status(:ok)
     end
+
+    it 'returns a reasonable amount of data' do
+      get '/api/orders', headers: headers
+      expect(response.body.length).to be > 50
+    end
   end
 
   describe 'create an order' do
@@ -51,11 +56,11 @@ RSpec.describe 'Order', type: :request do
           "total":\d+,                      # total as one or more digits
           "created_at":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z", # date eg 2022-02-05T00:25:38.365Z
           "order_items":\{  # sub object
-            "\d+":\{    # non capturing group for repetition
+            "\d+":\{
               "id":\d+,    # the generated id
               "menu_item_id":#{new_order[:order_items_attributes][0][:menu_item_id]},  # the
               "status":"received",
-              "price_at_order":\d+,
+              "price_at_order":\d+,  # the generated price
               "quantity":#{new_order[:order_items_attributes][0][:quantity]}
             \},
             "(\d+)":\{

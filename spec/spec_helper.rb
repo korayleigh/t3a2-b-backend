@@ -94,18 +94,18 @@ RSpec.configure do |config|
 
   # added by leigh 20220205 for database cleaner
 
-  require 'database_cleaner/active_record'
+  # require 'database_cleaner/active_record'
 
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
-  end
+  # config.before(:suite) do
+  #   DatabaseCleaner.strategy = :transaction
+  #   DatabaseCleaner.clean_with(:truncation)
+  # end
 
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      sh = SeedHelpers.new
-      sh.seed
-      example.run
-    end
-  end
+  # config.around(:each) do |example|
+  #   DatabaseCleaner.cleaning do
+  #     sh = SeedHelpers.new
+  #     sh.seed
+  #     example.run
+  #   end
+  # end
 end

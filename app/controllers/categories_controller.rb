@@ -1,0 +1,49 @@
+# frozen_string_literal: true
+
+class CategoriesController < ApplicationController
+  before_action :set_category, only: %i[show update destroy]
+
+  def index
+    render json: Category.all.to_h(&:transform_category_list), status: :ok
+  end
+
+  def show
+    render_json
+  end
+
+  def create
+    pp params
+    @category = Category.create(category_params)
+    render_json
+  end
+
+  def update
+    @category.update(category_params)
+    render_json
+  end
+
+  def destroy
+    @category.destroy
+    render status: :no_content
+  end
+
+  private
+
+  def set_category
+    @category = Category.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Not Found' }, status: :not_found
+  end
+
+  def category_params
+    params.require(:category).permit(:name)
+  end
+
+  def render_json
+    if @category.errors.any?
+      render json: @category.errors, status: :unprocessable_entity
+    else
+      render json: @category.transform_category, status: :ok
+    end
+  end
+end

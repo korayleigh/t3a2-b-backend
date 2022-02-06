@@ -60,3 +60,7 @@ gem 'rubocop-rails', '~> 2.13'
 gem 'rubocop-rspec', '~> 2.8'
 
 gem 'database_cleaner-active_record', '~> 2.0'
+
+gem 'faker', '~> 2.19'
+
+gem 'factory_bot_rails', '~> 6.2'
