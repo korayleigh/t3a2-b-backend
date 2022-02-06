@@ -12,10 +12,10 @@ FactoryBot.define do
     description { Faker::Food.description }
   end
 
-  tables = [ 'Table1', 'Table2', 'Table3', 'Table4', 'Table5', 'Table6', 'TakeAway']
+  tables = %w[Table1 Table2 Table3 Table4 Table5 Table6 TakeAway]
 
   factory :order do
-    table { tables.sample}
+    table { tables.sample }
     name { Faker::Name.name }
     email { Faker::Internet.email }
   end
