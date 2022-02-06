@@ -59,4 +59,4 @@ gem 'brakeman', '~> 5.2'
 gem 'rubocop-rails', '~> 2.13'
 gem 'rubocop-rspec', '~> 2.8'
 
-gem 'rexml'
+gem 'database_cleaner-active_record', '~> 2.0'

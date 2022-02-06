@@ -8,5 +8,5 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-sh = SeedHelpers.new(Rails.env)
+sh = SeedHelpers.new
 sh.seed
