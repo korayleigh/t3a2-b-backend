@@ -8,18 +8,17 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    render_json
+    render_json(:ok)
   end
 
   def create
-    pp params
     @category = Category.create(category_params)
-    render_json
+    render_json(:created)
   end
 
   def update
     @category.update(category_params)
-    render_json
+    render_json(:ok)
   end
 
   def destroy
@@ -39,11 +38,11 @@ class CategoriesController < ApplicationController
     params.require(:category).permit(:name)
   end
 
-  def render_json
+  def render_json(status)
     if @category.errors.any?
       render json: @category.errors, status: :unprocessable_entity
     else
-      render json: @category.transform_category, status: :ok
+      render json: @category.transform_category, status: status
     end
   end
 end
