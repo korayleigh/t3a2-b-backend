@@ -274,6 +274,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rack-cors (~> 1.1)
   rails (~> 6.1.4, >= 6.1.4.4)
+  rexml
   rspec-rails (~> 5.1)
   rubocop (~> 1.25)
   rubocop-rails (~> 2.13)
