@@ -15,7 +15,9 @@ Metrics/AbcSize:
 # Configuration parameters: CountComments, CountAsOne, ExcludedMethods, IgnoredMethods.
 # IgnoredMethods: refine
 Metrics/BlockLength:
-  Max: 115
+  Max: 100
+  Exclude:
+    - 'db/schema.rb'
 
 # Offense count: 1
 # Configuration parameters: IgnoredMethods.
@@ -93,3 +95,7 @@ Style/SymbolProc:
 # URISchemes: http, https
 Layout/LineLength:
   Max: 198
+
+Style/StringLiterals:
+  Exclude:
+    - 'db/schema.rb'

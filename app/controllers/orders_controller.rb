@@ -8,17 +8,17 @@ class OrdersController < ApplicationController
   end
 
   def show
-    render_json
+    render_json(:ok)
   end
 
   def create
     @order = Order.create(order_params)
-    render_json
+    render_json(:created)
   end
 
   def update
     @order.update(order_params)
-    render_json
+    render_json(:ok)
   end
 
   def destroy
@@ -38,11 +38,11 @@ class OrdersController < ApplicationController
     params.require(:order).permit(:id, :table, :name, :email, order_items_attributes: %i[id menu_item_id quantity])
   end
 
-  def render_json
+  def render_json(status)
     if @order.errors.any?
       render json: @order.errors, status: :unprocessable_entity
     else
-      render json: @order.transform_order, status: :ok
+      render json: @order.transform_order, status: status
     end
   end
 end
