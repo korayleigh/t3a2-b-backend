@@ -2,96 +2,90 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Order', type: :request do
-  describe 'get orders index' do
-    let(:headers) do
-      { 'CONTENT_TYPE' => 'application/json' }
+RSpec.describe 'Orders:', type: :request do
+  describe 'index:' do
+    let!(:orders) { create_list(:order, 5) }
+
+    before do
+      get '/api/orders'
     end
 
-    it 'responds with content type: application/json' do
-      get '/api/orders', headers: headers
-      expect(response.content_type).to eq('application/json; charset=utf-8')
+    it 'responds with all orders' do
+      expect(JSON.parse(response.body).size).to eq(5)
     end
-
-    it 'has status 200 OK' do
-      get '/api/orders', headers: headers
+    it 'responds with status code 200' do
       expect(response).to have_http_status(:ok)
     end
-
-    it 'returns a reasonable amount of data' do
-      get '/api/orders', headers: headers
-      expect(response.body.length).to be > 50
+    it 'responds with content type: application/json' do
+      expect(response.content_type).to eq('application/json; charset=utf-8')
     end
   end
 
-  describe 'create an order' do
-    let(:new_order) do
-      {
-        name: 'Banana',
-        email: 'test@test.com',
-        table: 3,
-        order_items_attributes: [
-          {
-            menu_item_id: MenuItem.find_by(name: 'Guacamole').id,
-            quantity: 2
-          }, {
-            menu_item_id: MenuItem.find_by(name: 'Pescado').id,
-            quantity: 1
-          }
-        ]
-      }
+  describe 'show:' do
+    let!(:order) { create(:order) }
+    before do
+      get "/api/orders/#{order.id}"
     end
 
-    let(:new_order_json) do
-      JSON.generate(new_order)
+    it 'responds with the requested order' do
+      expect(JSON.parse(response.body)['name']).to eq(order.name)
     end
-
-    let(:new_order_regex) do
-      /
-        \A\{
-          "id":\d+,   # The generated id
-          "table":"#{new_order[:table] == 0 ? 'TakeAway' : "Table#{new_order[:table]}"}",   #  eg Table3 or TakeAway, quoted
-          "name":"#{new_order[:name]}",  # name as quoted string
-          "email":"#{new_order[:email]}",  # email as quoted string
-          "total":\d+,                      # total as one or more digits
-          "created_at":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z", # date eg 2022-02-05T00:25:38.365Z
-          "order_items":\{  # sub object
-            "\d+":\{
-              "id":\d+,    # the generated id
-              "menu_item_id":#{new_order[:order_items_attributes][0][:menu_item_id]},  # the
-              "status":"received",
-              "price_at_order":\d+,  # the generated price
-              "quantity":#{new_order[:order_items_attributes][0][:quantity]}
-            \},
-            "(\d+)":\{
-              "id":\d+,
-              "menu_item_id":#{new_order[:order_items_attributes][1][:menu_item_id]},
-              "status":"received",
-              "price_at_order":\d+,
-              "quantity":#{new_order[:order_items_attributes][1][:quantity]}
-            \}
-          \}
-        \}\Z
-      /x
-    end
-
-    let(:headers) do
-      { 'CONTENT_TYPE' => 'application/json' }
-    end
-
-    it 'responds with content type: application/json' do
-      post '/api/orders', params: new_order_json, headers: headers
-      expect(response.content_type).to eq('application/json; charset=utf-8')
-    end
-
-    it 'has status 200 OK' do
-      post '/api/orders', params: new_order_json, headers: headers
+    it 'responds with status: ok' do
       expect(response).to have_http_status(:ok)
     end
+    it 'responds with content type: application/json' do
+      expect(response.content_type).to eq('application/json; charset=utf-8')
+    end
+  end
 
-    it 'contains the new order' do
-      post '/api/orders', params: new_order_json, headers: headers
-      expect(response.body).to match(new_order_regex)
+  describe 'create:' do
+    let!(:new_order_attributes) { FactoryBot.attributes_for(:order) }
+    before do
+      post '/api/orders', params: { order: new_order_attributes }
+    end
+
+    it 'responds with the created order' do
+      expect(JSON.parse(response.body, symbolize_names: true)).to include(**new_order_attributes)
+    end
+    it 'responds with status: created' do
+      expect(response).to have_http_status(:created)
+    end
+    it 'responds with content type: application/json' do
+      expect(response.content_type).to eq('application/json; charset=utf-8')
+    end
+  end
+
+  describe 'update:' do
+    let!(:order) { create(:order) }
+    let!(:new_order_attributes) { FactoryBot.attributes_for(:order) }
+    before do
+      put "/api/orders/#{order.id}", params: { order: new_order_attributes }
+    end
+
+    it 'updates order' do
+      new_order_attributes.each do |attribute|
+        expect(Order.find(order.id)[attribute]).to eq(new_order_attributes[attribute])
+      end
+    end
+    it 'responds with status: created' do
+      expect(response).to have_http_status(:ok)
+    end
+    it 'responds with content type: application/json' do
+      expect(response.content_type).to eq('application/json; charset=utf-8')
+    end
+  end
+
+  describe 'delete:' do
+    let!(:order) { create(:order) }
+    before do
+      delete "/api/orders/#{order.id}"
+    end
+
+    it 'deletes the requested order' do
+      expect { Order.find(order.id) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+    it 'responds with status: no content' do
+      expect(response).to have_http_status(:no_content)
     end
   end
 end
