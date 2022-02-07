@@ -5,8 +5,17 @@ class MenuItemsController < ApplicationController
   before_action :set_menu_item, only: %i[show update destroy]
 
   def index
-    render json: MenuItem.visible.to_h(&:transform_menu_item_list), status: :ok
+    # render json: MenuItem.visible.to_h(&:transform_menu_item_list), status: :ok
+    render json: MenuItem.visible, status: :ok
   end
+
+  def show
+    # render json: MenuItem.visible.to_h(&:transform_menu_item_list), status: :ok
+    puts ("id: #{@menu_item.id}")
+    # path = Rails.application.routes.url_helpers.rails_blob_path(@menu_item.image, only_path: true)
+    render json: url_for(@menu_item.image), status: :ok
+  end
+
 
   def index_grouped
     render json: MenuItem.grouped_menu_items, status: :ok
@@ -40,7 +49,7 @@ class MenuItemsController < ApplicationController
   private
 
   def menu_item_params
-    params.require(:menu_item).permit(:name, :price, :description, :category_id)
+    params.permit(:name, :price, :description, :category_id, :image)
   end
 
   def set_menu_item
