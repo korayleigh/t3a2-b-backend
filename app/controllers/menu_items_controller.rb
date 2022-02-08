@@ -7,6 +7,7 @@ class MenuItemsController < ApplicationController
   def index
     # render json: MenuItem.visible.to_h(&:transform_menu_item_list), status: :ok
     render json: MenuItem.visible, status: :ok
+    # render json: MenuItem.all
   end
 
   def show

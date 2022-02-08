@@ -1,0 +1,16 @@
+class MenuItemSerializer < ActiveModel::Serializer
+  include Rails.application.routes.url_helpers
+  attributes :id, :name, :price, :description, :category_id, :image
+
+  def image
+    if object.image.attached?
+      url = object.image.service_url if object.image.attached?
+      {
+        imagePath: url
+      }
+    end
+  end
+  
+end
+
+# imagePath: rails_blob_path(object.image, only_path: true)
