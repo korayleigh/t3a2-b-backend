@@ -11,11 +11,10 @@ class MenuItemsController < ApplicationController
 
   def show
     # render json: MenuItem.visible.to_h(&:transform_menu_item_list), status: :ok
-    puts ("id: #{@menu_item.id}")
+    puts("id: #{@menu_item.id}")
     # path = Rails.application.routes.url_helpers.rails_blob_path(@menu_item.image, only_path: true)
     render json: url_for(@menu_item.image), status: :ok
   end
-
 
   def index_grouped
     render json: MenuItem.grouped_menu_items, status: :ok

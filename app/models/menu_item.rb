@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require 'action_view/helpers/url_helper.rb'
 
+require 'action_view/helpers/url_helper'
 
 class MenuItem < ApplicationRecord
   belongs_to :category
