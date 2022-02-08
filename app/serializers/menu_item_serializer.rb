@@ -5,12 +5,12 @@ class MenuItemSerializer < ActiveModel::Serializer
   attributes :id, :name, :price, :description, :category_id, :image
 
   def image
-    if object.image.attached?
-      url = object.image.service_url if object.image.attached?
-      {
-        imagePath: url
-      }
-    end
+    return unless object.image.attached?
+
+    url = object.image.service_url if object.image.attached?
+    {
+      imagePath: url
+    }
   end
 end
 
