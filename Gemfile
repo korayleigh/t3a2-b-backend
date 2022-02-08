@@ -50,8 +50,8 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
+gem 'active_model_serializers'
 gem 'aws-sdk-s3', '~> 1.111'
 gem 'devise', '~> 4.8'
 gem 'devise-jwt', '~> 0.9.0'
 gem 'rack-cors', '~> 1.1'
-gem 'active_model_serializers'

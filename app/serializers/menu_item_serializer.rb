@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MenuItemSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
   attributes :id, :name, :price, :description, :category_id, :image
@@ -10,7 +12,6 @@ class MenuItemSerializer < ActiveModel::Serializer
       }
     end
   end
-  
 end
 
 # imagePath: rails_blob_path(object.image, only_path: true)
