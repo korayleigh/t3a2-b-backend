@@ -28,6 +28,10 @@ class Order < ApplicationRecord
     order_items.sum('price_at_order * quantity')
   end
 
+  def items
+    order_items.sum(:quantity)
+  end
+
   def transform_order
     order_hash = {
       id: id,
@@ -35,6 +39,7 @@ class Order < ApplicationRecord
       name: name,
       email: email,
       total: total,
+      items: items,
       created_at: created_at,
       order_items: order_items.to_h(&:transform_order_item_list)
     }
