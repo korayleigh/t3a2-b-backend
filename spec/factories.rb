@@ -23,6 +23,8 @@ FactoryBot.define do
   factory :order_item do
     menu_item
     order
+    quantity { Faker::Number.between(from: 1, to: 8) }
+    request { Faker::Adjective.unique.positive }
   end
 
   factory :menu_group do
