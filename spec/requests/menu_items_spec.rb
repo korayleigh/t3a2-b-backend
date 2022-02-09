@@ -6,7 +6,7 @@ RSpec.describe 'Menu Items:', type: :request do
   describe 'index:' do
     before do
       create_list(:menu_item, 5)
-      get '/api/menu'
+      get '/api/menu_items'
     end
 
     it 'responds with all menu items' do
