@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get '/menu_grouped', to: 'menu_items#index_grouped'
     resources :menu_items, only: %i[index show create update destroy]
     resources :orders, only: %i[index show create update destroy]
+    get '/tables', to: 'orders#tables'
     resources :categories, only: %i[index show create update destroy]
   end
 end

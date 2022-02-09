@@ -26,6 +26,10 @@ class OrdersController < ApplicationController
     render status: :no_content
   end
 
+  def tables
+    render json: Order.tables, status: :ok
+  end
+
   private
 
   def set_order
@@ -35,7 +39,7 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:id, :table, :name, :email, order_items_attributes: %i[id menu_item_id quantity])
+    params.require(:order).permit(:table, :name, :email, order_items_attributes: %i[id menu_item_id quantity])
   end
 
   def render_json(status)
