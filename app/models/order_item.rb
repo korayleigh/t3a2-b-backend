@@ -12,10 +12,10 @@ class OrderItem < ApplicationRecord
   before_validation :insert_price_at_order
 
   enum status: {
-    cancelled: -1,
-    received: 0,
-    in_progress: 1,
-    complete: 2
+    cancelled: 1,
+    received: 2,
+    in_progress: 3,
+    complete: 4
   }
 
   def transform_order_item
