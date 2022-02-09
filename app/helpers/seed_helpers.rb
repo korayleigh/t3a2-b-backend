@@ -41,7 +41,9 @@ class SeedHelpers
     seed_orders
   end
 
-  def seed_production; end
+  def seed_production
+    seed_users
+  end
 
   def seed_categories
     return if Category.any?

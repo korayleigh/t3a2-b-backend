@@ -13,7 +13,7 @@ class MenuItem < ApplicationRecord
   validates :name, presence: true
   validates :price, presence: true
   validates :description, presence: true
-  validates :category_id, presence: true
+  validates :category, presence: true
 
   scope :visible, -> { where(visible: true).joins(:category).order('name ASC') }
   scope :ungrouped, -> { where.missing(:group_menu_item) }
