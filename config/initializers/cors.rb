@@ -11,10 +11,10 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     if Rails.env.production?
       origins 'mexiqui.to'
-      puts 'cors origin: mexiqui.to'
+      # puts 'cors origin: mexiqui.to'
     else
       origins '*'
-      puts 'cors origin: *'
+      # puts 'cors origin: *'
     end
 
     resource '*',

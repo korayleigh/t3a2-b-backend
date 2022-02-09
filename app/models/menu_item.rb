@@ -1,11 +1,19 @@
 # frozen_string_literal: true
 
+require 'action_view/helpers/url_helper'
+
 class MenuItem < ApplicationRecord
   belongs_to :category
   has_one :group_menu_item
   has_one :menu_group, through: :group_menu_item
   has_many :order_items
   has_many :orders, through: :order_items
+  has_one_attached :image
+
+  validates :name, presence: true
+  validates :price, presence: true
+  validates :description, presence: true
+  validates :category_id, presence: true
 
   scope :visible, -> { where(visible: true).joins(:category).order('name ASC') }
   scope :ungrouped, -> { where.missing(:group_menu_item) }
@@ -19,6 +27,10 @@ class MenuItem < ApplicationRecord
       category_id: category_id,
       category: category.name
     }
+  end
+
+  def transform_menu_item_list
+    [id, transform_menu_item]
   end
 
   def self.grouped_menu_items

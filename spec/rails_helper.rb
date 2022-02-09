@@ -39,7 +39,11 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  # config.use_transactional_fixtures = true
+
+  # Following this guide for how to setup rspec, faker, and factory bot for testing
+  # https://medium.com/@sedwardscode/how-to-properly-test-a-rails-api-with-rspec-f15cbe1dfd11
+  config.use_transactional_fixtures = false
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
@@ -64,8 +68,7 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  # https://stackoverflow.com/questions/6004057/with-rspec-how-to-seed-the-database-on-load/19830124
-  # config.before(:request) do
-  #   Rails.application.load_seed # loading seeds
-  # end
+  # Added as per
+  # https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md
+  require 'support/factory_bot'
 end
