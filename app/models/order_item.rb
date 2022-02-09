@@ -23,6 +23,7 @@ class OrderItem < ApplicationRecord
       id: id,
       order_id: order_id,
       menu_item_id: menu_item_id,
+      menu_item: menu_item.name,
       status: status,
       price_at_order: price_at_order,
       quantity: quantity

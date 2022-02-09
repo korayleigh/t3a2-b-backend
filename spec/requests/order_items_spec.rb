@@ -29,7 +29,7 @@ RSpec.describe 'Order Items:', type: :request do
     end
 
     it 'responds with the requested order_item' do
-      expect(order_item.as_json).to include(JSON.parse(response.body))
+      expect(JSON.parse(response.body, symbolize_names: true)).to include(order_item.transform_order_item)
     end
     it 'responds with status: ok' do
       expect(response).to have_http_status(:ok)
@@ -75,7 +75,6 @@ RSpec.describe 'Order Items:', type: :request do
 
     it 'updates order_item attributes' do
       new_order_item_attributes.each do |attribute, value|
-        expect(OrderItem.find(order_item.id)[attribute]).not_to eq(order_item[attribute])
         expect(OrderItem.find(order_item.id)[attribute]).to eq(value)
       end
     end

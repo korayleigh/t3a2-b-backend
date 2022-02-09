@@ -29,7 +29,7 @@ RSpec.describe 'Categories:', type: :request do
     end
 
     it 'responds with the requested category' do
-      expect(category.as_json).to include(JSON.parse(response.body))
+      expect(JSON.parse(response.body, symbolize_names: true)).to include(category.transform_category)
     end
     it 'responds with status: ok' do
       expect(response).to have_http_status(:ok)
