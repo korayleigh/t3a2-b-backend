@@ -2,11 +2,13 @@
 
 require 'rails_helper'
 
+api_path = '/api/categories'
+
 RSpec.describe 'Categories:', type: :request do
   describe 'index:' do
     before do
       create_list(:category, 5)
-      get '/api/categories'
+      get api_path
     end
 
     it 'responds with all categories' do
@@ -23,11 +25,11 @@ RSpec.describe 'Categories:', type: :request do
   describe 'show:' do
     let!(:category) { create(:category) }
     before do
-      get "/api/categories/#{category.id}"
+      get "#{api_path}/#{category.id}"
     end
 
     it 'responds with the requested category' do
-      expect(JSON.parse(response.body)['name']).to eq(category.name)
+      expect(JSON.parse(response.body, symbolize_names: true)).to include(category.transform_category)
     end
     it 'responds with status: ok' do
       expect(response).to have_http_status(:ok)
@@ -40,7 +42,7 @@ RSpec.describe 'Categories:', type: :request do
   describe 'create:' do
     let!(:new_category_attributes) { FactoryBot.attributes_for(:category) }
     before do
-      post '/api/categories', params: { category: new_category_attributes }
+      post api_path, params: { category: new_category_attributes }
     end
 
     it 'responds with the created category' do
@@ -58,7 +60,7 @@ RSpec.describe 'Categories:', type: :request do
     let!(:category) { create(:category) }
     let!(:new_category_attributes) { FactoryBot.attributes_for(:category) }
     before do
-      put "/api/categories/#{category.id}", params: { category: new_category_attributes }
+      put "#{api_path}/#{category.id}", params: { category: new_category_attributes }
     end
 
     it 'updates category attributes' do
@@ -77,7 +79,7 @@ RSpec.describe 'Categories:', type: :request do
   describe 'delete:' do
     let!(:category) { create(:category) }
     before do
-      delete "/api/categories/#{category.id}"
+      delete "#{api_path}/#{category.id}"
     end
     it 'deletes the requested category' do
       expect { Category.find(category.id) }.to raise_error(ActiveRecord::RecordNotFound)

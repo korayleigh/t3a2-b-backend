@@ -52,6 +52,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'active_model_serializers'
 gem 'aws-sdk-s3', '~> 1.111'
+gem 'cancancan', '~> 3.3'
 gem 'devise', '~> 4.8'
 gem 'devise-jwt', '~> 0.9.0'
 gem 'rack-cors', '~> 1.1'

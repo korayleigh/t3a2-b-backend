@@ -4,6 +4,7 @@ class OrderItem < ApplicationRecord
   belongs_to :menu_item
   belongs_to :order
 
+  validates :order, presence: true
   validates :menu_item, presence: true
   validates :quantity, presence: true
   validates :price_at_order, presence: true
@@ -11,22 +12,25 @@ class OrderItem < ApplicationRecord
   before_validation :insert_price_at_order
 
   enum status: {
-    cancelled: -1,
-    received: 0,
-    in_progress: 1,
-    complete: 2
+    cancelled: 1,
+    received: 2,
+    in_progress: 3,
+    complete: 4
   }
 
   def transform_order_item
     order_item_hash = {
       id: id,
+      order_id: order_id,
       menu_item_id: menu_item_id,
+      menu_item: menu_item.name,
       status: status,
       price_at_order: price_at_order,
       quantity: quantity
     }
-    order_item_hash.merge({ request: request }) if request
-    order_item_hash
+    order_item_hash.merge(
+      request ? { request: request } : {}
+    )
   end
 
   def transform_order_item_list

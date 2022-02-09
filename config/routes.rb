@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     resources :menu_items, only: %i[index show create update destroy]
     resources :orders, only: %i[index show create update destroy]
     get '/tables', to: 'orders#tables'
+    resources :order_items, only: %i[index show create update destroy]
+    get '/statuses', to: 'order_items#statuses'
     resources :categories, only: %i[index show create update destroy]
   end
 end
