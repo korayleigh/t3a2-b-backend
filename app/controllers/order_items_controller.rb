@@ -26,6 +26,10 @@ class OrderItemsController < ApplicationController
     render status: :no_content
   end
 
+  def statuses
+    render json: OrderItem.statuses, status: :ok
+  end
+
   private
 
   def set_order_item
@@ -39,7 +43,7 @@ class OrderItemsController < ApplicationController
   end
 
   def order_item_params_update
-    params.require(:order_item).permit(:status, :quantity, :price_at_order, :request)
+    params.require(:order_item).permit(:menu_item_id, :status, :quantity, :price_at_order, :request)
   end
 
   def render_json(status)
