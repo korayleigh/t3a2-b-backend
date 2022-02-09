@@ -34,17 +34,17 @@ require 'rails_helper'
 #     end
 
 #     it "should have a http status of 'unprocessable entity' when omitting some parameters" do
-#       post new_menu_item_path, params: unsuccessful_menu_item_params
+#       post menu_item_path, params: unsuccessful_menu_item_params
 #       expect(response).to have_http_status(:unprocessable_entity)
 #     end
 
 #     it "should have a http status of 'created' when creating a valid object" do
-#       post new_menu_item_path, params: successful_menu_item_params
+#       post menu_item_path, params: successful_menu_item_params
 #       expect(response).to have_http_status(:created)
 #     end
 
 #     it 'the created object should contain the submitted parameters' do
-#       post new_menu_item_path, params: successful_menu_item_params
+#       post menu_item_path, params: successful_menu_item_params
 #       expect(response.body).to include(successful_menu_item_params[:menu_item][:name])
 #     end
 #   end
