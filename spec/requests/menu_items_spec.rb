@@ -2,11 +2,13 @@
 
 require 'rails_helper'
 
+api_path = '/api/menu_items'
+
 RSpec.describe 'Menu Items:', type: :request do
   describe 'index:' do
     before do
       create_list(:menu_item, 5)
-      get '/api/menu_items'
+      get api_path
     end
 
     it 'responds with all menu items' do

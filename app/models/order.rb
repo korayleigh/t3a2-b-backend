@@ -43,10 +43,11 @@ class Order < ApplicationRecord
       created_at: created_at,
       order_items: order_items.to_h(&:transform_order_item_list)
     }
-    order_hash.merge({ owner: owner.name }) if owner
-    order_hash.merge({ createad_by: created_by.name }) if created_by
-    order_hash.merge({ updated_by: updated_by.name }) if updated_by
-    order_hash
+    order_hash.merge(
+      owner ? { owner: owner.name } : {},
+      created_by ? { createad_by: created_by.name } : {},
+      updated_by ? { updated_by: updated_by.name } : {}
+    )
   end
 
   def transform_order_list

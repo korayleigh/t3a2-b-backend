@@ -4,6 +4,7 @@ class OrderItem < ApplicationRecord
   belongs_to :menu_item
   belongs_to :order
 
+  validates :order, presence: true
   validates :menu_item, presence: true
   validates :quantity, presence: true
   validates :price_at_order, presence: true
@@ -20,13 +21,15 @@ class OrderItem < ApplicationRecord
   def transform_order_item
     order_item_hash = {
       id: id,
+      order_id: order_id,
       menu_item_id: menu_item_id,
       status: status,
       price_at_order: price_at_order,
       quantity: quantity
     }
-    order_item_hash.merge({ request: request }) if request
-    order_item_hash
+    order_item_hash.merge(
+      request ? { request: request } : {}
+    )
   end
 
   def transform_order_item_list
