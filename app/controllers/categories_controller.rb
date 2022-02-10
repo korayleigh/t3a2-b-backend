@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
   before_action :set_category, only: %i[show update destroy]
 
   def index
@@ -8,7 +9,6 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    pp current_user
     render_json(:ok)
   end
 

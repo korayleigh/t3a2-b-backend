@@ -10,7 +10,7 @@ Rails.application.routes.draw do
                defaults: { format: :json },
                controllers: {
                  sessions: 'users/sessions',
-                 registrations: 'users/registrations'
+                 registrations: 'users/registrations',
                }
 
     # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
