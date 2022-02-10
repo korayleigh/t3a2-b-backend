@@ -7,6 +7,10 @@ api_path = '/api/categories'
 RSpec.describe 'Categories:', type: :request do
   describe 'index:' do
     before do
+      admin_role = FactoryBot.create(:role, name: 'Admin')
+      employee = FactoryBot.build(:employee, role: admin_role)
+      admin = FactoryBot.create(:user, :admin, userable: employee)
+      sign_in admin
       create_list(:category, 5)
       get api_path
     end
@@ -25,6 +29,10 @@ RSpec.describe 'Categories:', type: :request do
   describe 'show:' do
     let!(:category) { create(:category) }
     before do
+      admin_role = FactoryBot.create(:role, name: 'Admin')
+      employee = FactoryBot.build(:employee, role: admin_role)
+      admin = FactoryBot.create(:user, :admin, userable: employee)
+      sign_in admin
       get "#{api_path}/#{category.id}"
     end
 
@@ -42,6 +50,10 @@ RSpec.describe 'Categories:', type: :request do
   describe 'create:' do
     let!(:new_category_attributes) { FactoryBot.attributes_for(:category) }
     before do
+      admin_role = FactoryBot.create(:role, name: 'Admin')
+      employee = FactoryBot.build(:employee, role: admin_role)
+      admin = FactoryBot.create(:user, :admin, userable: employee)
+      sign_in admin
       post api_path, params: { category: new_category_attributes }
     end
 
@@ -60,6 +72,10 @@ RSpec.describe 'Categories:', type: :request do
     let!(:category) { create(:category) }
     let!(:new_category_attributes) { FactoryBot.attributes_for(:category) }
     before do
+      admin_role = FactoryBot.create(:role, name: 'Admin')
+      employee = FactoryBot.build(:employee, role: admin_role)
+      admin = FactoryBot.create(:user, :admin, userable: employee)
+      sign_in admin
       put "#{api_path}/#{category.id}", params: { category: new_category_attributes }
     end
 
@@ -79,6 +95,10 @@ RSpec.describe 'Categories:', type: :request do
   describe 'delete:' do
     let!(:category) { create(:category) }
     before do
+      admin_role = FactoryBot.create(:role, name: 'Admin')
+      employee = FactoryBot.build(:employee, role: admin_role)
+      admin = FactoryBot.create(:user, :admin, userable: employee)
+      sign_in admin
       delete "#{api_path}/#{category.id}"
     end
     it 'deletes the requested category' do
