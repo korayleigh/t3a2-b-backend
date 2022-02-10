@@ -8,6 +8,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
+    pp current_user
     render_json(:ok)
   end
 

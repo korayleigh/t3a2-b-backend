@@ -32,7 +32,7 @@ class Users::SessionsController < Devise::SessionsController
   def respond_with(resource, _opts = {})
     sign_in_response = {
       email: resource.email,
-      role: resource.userable_type == 'Employee' ? resource.userable.role.name : 'customer',
+      role: resource.userable.is_a?(Employee) ? resource.userable.role.name : 'customer',
       message: 'Successfully logged in.'
     }
 
