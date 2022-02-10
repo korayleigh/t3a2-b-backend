@@ -2,6 +2,10 @@
 
 Rails.application.routes.draw do
   scope '/api' do
+    devise_scope :user do
+      get '/users/show', to: 'users/registrations#show'
+    end
+
     devise_for :users,
                defaults: { format: :json },
                controllers: {

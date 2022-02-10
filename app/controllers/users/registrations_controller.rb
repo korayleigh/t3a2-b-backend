@@ -4,10 +4,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
+  before_action :authenticate_user!, only: [:show]
+
   # GET /resource/sign_up
   # def new
   #   super
   # end
+
+  def show
+    render json: {
+      email: current_user.email,
+      role: current_user.userable.is_a?(Employee) ? current_user.userable.role.name : 'customer'
+    }, status: :ok
+  end
 
   # POST /resource
   def create
