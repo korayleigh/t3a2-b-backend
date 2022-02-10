@@ -12,11 +12,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     # super
-    if User.find_by(email: params[:email])
-      render json: { error: 'User already exists' }, status: :unprocessable_entity
-      return
+    @user = User.create(customer_params.merge(userable: Customer.new))
+
+    if @user.errors.any?
+      render json: { error: @user.errors }, status: :unprocessable_entity
+    else
+      render json: @user, status: :created
     end
-    @user = User.create!(customer_params.merge(userable: Customer.new))
   end
 
   # GET /resource/edit

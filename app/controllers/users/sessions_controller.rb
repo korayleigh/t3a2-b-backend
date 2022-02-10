@@ -30,10 +30,13 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def respond_with(resource, _opts = {})
-    render json: {
+    sign_in_response = {
       email: resource.email,
-      message: 'You are logged in.'
-    }, status: :ok
+      role: resource.userable_type == 'Employee' ? resource.userable.role.name : 'customer',
+      message: 'Successfully logged in.'
+    }
+
+    render json: sign_in_response, status: :ok
   end
 
   def respond_to_on_destroy
@@ -43,7 +46,7 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def log_out_success
-    render json: { message: 'You are logged out.' }, status: :ok
+    render json: { message: 'Successfully logged out.' }, status: :ok
   end
 
   def log_out_failure

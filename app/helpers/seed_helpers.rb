@@ -236,6 +236,11 @@ class SeedHelpers
                  first_name: 'Waiter', last_name: 'User', email: 'waiter@mexiqui.to',
                  password: 'reallydifficultwaiterpassword', password_confirmation: 'reallydifficultwaiterpassword')
     # puts 'created Waiter User'
+
+    User.create!(userable: Customer.new,
+                 first_name: 'Ezio', last_name: 'Auditore', email: 'ezio@monteriggioni.it',
+                 password: 'nothingistrueeverythingispermitted', password_confirmation: 'nothingistrueeverythingispermitted')
+    # puts 'created Customer'
   end
 
   def seed_orders
