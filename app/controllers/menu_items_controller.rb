@@ -4,6 +4,8 @@ class MenuItemsController < ApplicationController
   # before_action :authenticate_user!
   before_action :set_menu_item, only: %i[show update destroy]
 
+  wrap_parameters include: MenuItem.attribute_names + ['image']
+
   def index
     # render json: MenuItem.visible.to_h(&:transform_menu_item_list), status: :ok
     render json: MenuItem.visible, status: :ok

@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 20_220_207_030_615) do
   create_table "order_items", force: :cascade do |t|
     t.bigint "menu_item_id", null: false
     t.bigint "order_id", null: false
-    t.integer "status", default: 0, null: false
+    t.integer "status", default: 2, null: false
     t.integer "price_at_order", null: false
     t.text "request"
     t.datetime "created_at", precision: 6, null: false
