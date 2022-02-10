@@ -50,10 +50,13 @@ FactoryBot.define do
     permission
   end
 
-  factory :customer
+  factory :customer do
+    user
+  end
 
   factory :employee do
     role
+    user
   end
 
   password = Faker::Internet.password(min_length: 8)
@@ -67,6 +70,9 @@ FactoryBot.define do
       association :userable, factory: :customer
     end
     trait :for_employee do
+      association :userable, factory: :employee
+    end
+    trait :admin do
       association :userable, factory: :employee
     end
   end
