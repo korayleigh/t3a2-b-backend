@@ -3,14 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Orders:', type: :request do
+  before do
+    admin_role = FactoryBot.create(:role, name: 'Admin')
+    employee = FactoryBot.build(:employee, role: admin_role)
+    admin = FactoryBot.create(:user, :admin, userable: employee)
+    sign_in admin
+  end
+
   describe 'index:' do
     let!(:orders) { create_list(:order, 5) }
 
     before do
-      admin_role = FactoryBot.create(:role, name: 'Admin')
-      employee = FactoryBot.build(:employee, role: admin_role)
-      admin = FactoryBot.create(:user, :admin, userable: employee)
-      sign_in admin
       get '/api/orders'
     end
 
@@ -28,10 +31,6 @@ RSpec.describe 'Orders:', type: :request do
   describe 'show:' do
     let!(:order) { create(:order) }
     before do
-      admin_role = FactoryBot.create(:role, name: 'Admin')
-      employee = FactoryBot.build(:employee, role: admin_role)
-      admin = FactoryBot.create(:user, :admin, userable: employee)
-      sign_in admin
       get "/api/orders/#{order.id}"
     end
 
@@ -49,10 +48,6 @@ RSpec.describe 'Orders:', type: :request do
   describe 'create:' do
     let!(:new_order_attributes) { FactoryBot.attributes_for(:order) }
     before do
-      admin_role = FactoryBot.create(:role, name: 'Admin')
-      employee = FactoryBot.build(:employee, role: admin_role)
-      admin = FactoryBot.create(:user, :admin, userable: employee)
-      sign_in admin
       post '/api/orders', params: { order: new_order_attributes }
     end
 
@@ -71,10 +66,6 @@ RSpec.describe 'Orders:', type: :request do
     let!(:order) { create(:order) }
     let!(:new_order_attributes) { FactoryBot.attributes_for(:order) }
     before do
-      admin_role = FactoryBot.create(:role, name: 'Admin')
-      employee = FactoryBot.build(:employee, role: admin_role)
-      admin = FactoryBot.create(:user, :admin, userable: employee)
-      sign_in admin
       put "/api/orders/#{order.id}", params: { order: new_order_attributes }
     end
 
@@ -83,7 +74,7 @@ RSpec.describe 'Orders:', type: :request do
         expect(Order.find(order.id)[attribute]).to eq(new_order_attributes[attribute])
       end
     end
-    it 'responds with status: created' do
+    it 'responds with status: ok' do
       expect(response).to have_http_status(:ok)
     end
     it 'responds with content type: application/json' do
@@ -94,10 +85,6 @@ RSpec.describe 'Orders:', type: :request do
   describe 'delete:' do
     let!(:order) { create(:order) }
     before do
-      admin_role = FactoryBot.create(:role, name: 'Admin')
-      employee = FactoryBot.build(:employee, role: admin_role)
-      admin = FactoryBot.create(:user, :admin, userable: employee)
-      sign_in admin
       delete "/api/orders/#{order.id}"
     end
 

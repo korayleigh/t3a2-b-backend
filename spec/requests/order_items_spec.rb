@@ -5,12 +5,15 @@ require 'rails_helper'
 api_path = '/api/order_items'
 
 RSpec.describe 'Order Items:', type: :request do
+  before do
+    admin_role = FactoryBot.create(:role, name: 'Admin')
+    employee = FactoryBot.build(:employee, role: admin_role)
+    admin = FactoryBot.create(:user, :admin, userable: employee)
+    sign_in admin
+  end
+
   describe 'index:' do
     before do
-      admin_role = FactoryBot.create(:role, name: 'Admin')
-      employee = FactoryBot.build(:employee, role: admin_role)
-      admin = FactoryBot.create(:user, :admin, userable: employee)
-      sign_in admin
       create_list(:order_item, 5)
       get api_path
     end
@@ -29,10 +32,6 @@ RSpec.describe 'Order Items:', type: :request do
   describe 'show:' do
     let!(:order_item) { create(:order_item) }
     before do
-      admin_role = FactoryBot.create(:role, name: 'Admin')
-      employee = FactoryBot.build(:employee, role: admin_role)
-      admin = FactoryBot.create(:user, :admin, userable: employee)
-      sign_in admin
       get "#{api_path}/#{order_item.id}"
     end
 
@@ -55,10 +54,6 @@ RSpec.describe 'Order Items:', type: :request do
     end
 
     before do
-      admin_role = FactoryBot.create(:role, name: 'Admin')
-      employee = FactoryBot.build(:employee, role: admin_role)
-      admin = FactoryBot.create(:user, :admin, userable: employee)
-      sign_in admin
       post api_path, params: { order_item: new_order_item_attributes }
     end
 
@@ -82,10 +77,6 @@ RSpec.describe 'Order Items:', type: :request do
 
     let!(:new_order_item_attributes) { FactoryBot.attributes_for(:order_item) }
     before do
-      admin_role = FactoryBot.create(:role, name: 'Admin')
-      employee = FactoryBot.build(:employee, role: admin_role)
-      admin = FactoryBot.create(:user, :admin, userable: employee)
-      sign_in admin
       put "#{api_path}/#{order_item.id}", params: { order_item: new_order_item_attributes }
     end
 
@@ -105,10 +96,6 @@ RSpec.describe 'Order Items:', type: :request do
   describe 'delete:' do
     let!(:order_item) { create(:order_item) }
     before do
-      admin_role = FactoryBot.create(:role, name: 'Admin')
-      employee = FactoryBot.build(:employee, role: admin_role)
-      admin = FactoryBot.create(:user, :admin, userable: employee)
-      sign_in admin
       delete "#{api_path}/#{order_item.id}"
     end
     it 'deletes the requested order_item' do
