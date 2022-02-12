@@ -18,6 +18,8 @@ class OrderItem < ApplicationRecord
     complete: 4
   }
 
+  scope :pending, -> { where(status: %i[received in_progress]).order(created_at: :desc) }
+
   def transform_order_item
     order_item_hash = {
       id: id,
@@ -26,7 +28,9 @@ class OrderItem < ApplicationRecord
       menu_item: menu_item.name,
       status: status,
       price_at_order: price_at_order,
-      quantity: quantity
+      quantity: quantity,
+      created_at: created_at,
+      updated_at: updated_at
     }
     order_item_hash.merge(
       request ? { request: request } : {}
