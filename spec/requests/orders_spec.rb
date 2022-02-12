@@ -3,6 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Orders:', type: :request do
+  before do
+    admin_role = FactoryBot.create(:role, name: 'Admin')
+    employee = FactoryBot.build(:employee, role: admin_role)
+    admin = FactoryBot.create(:user, :admin, userable: employee)
+    sign_in admin
+  end
+
   describe 'index:' do
     let!(:orders) { create_list(:order, 5) }
 
@@ -67,7 +74,7 @@ RSpec.describe 'Orders:', type: :request do
         expect(Order.find(order.id)[attribute]).to eq(new_order_attributes[attribute])
       end
     end
-    it 'responds with status: created' do
+    it 'responds with status: ok' do
       expect(response).to have_http_status(:ok)
     end
     it 'responds with content type: application/json' do

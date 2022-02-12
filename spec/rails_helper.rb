@@ -71,4 +71,8 @@ RSpec.configure do |config|
   # Added as per
   # https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md
   require 'support/factory_bot'
+
+  # Added for testing with devise
+  # https://github.com/heartcombo/devise#controller-tests
+  require 'support/devise'
 end

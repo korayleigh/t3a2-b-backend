@@ -20,6 +20,7 @@ Metrics/BlockLength:
   Max: 100
   Exclude:
     - 'db/schema.rb'
+    - 'spec/requests/*'
 
 # Offense count: 1
 # Configuration parameters: IgnoredMethods.

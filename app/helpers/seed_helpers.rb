@@ -42,6 +42,7 @@ class SeedHelpers
   end
 
   def seed_production
+    seed_roles
     seed_users
   end
 
@@ -194,6 +195,8 @@ class SeedHelpers
     admin_role = Role.create!(name: 'Admin')
     admin_role.permissions.push(write_users_permission, write_orders_permission, write_menu_permission)
     # puts 'created Role: Admin'
+
+    return if Rails.env.production?
 
     manager_role = Role.create!(name: 'Manager')
     manager_role.permissions.push(write_orders_permission, write_menu_permission)
