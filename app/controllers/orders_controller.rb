@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
   end
 
   def update
-    @order.update(order_params)
+    @order.update(order_params.merge({ updated_by: current_user }))
     render_json(:ok)
   end
 
