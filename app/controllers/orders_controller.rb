@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, except: %i[create show]
-  before_action :set_order, only: %i[show update destroy]
+  before_action :authenticate_user!, except: %i[create status]
+  before_action :set_order, only: %i[show status update destroy]
 
   def index
     render json: Order.all.to_h(&:transform_order_list), status: :ok
@@ -10,6 +10,14 @@ class OrdersController < ApplicationController
 
   def show
     render_json(:ok)
+  end
+
+  def status
+    if @order.email == params[:email]
+      render_json(:ok)
+    else
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end
   end
 
   def create
