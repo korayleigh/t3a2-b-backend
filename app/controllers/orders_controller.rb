@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, except: %i[create status]
+  before_action :authenticate_user!, except: %i[create status tables]
   before_action :set_order, only: %i[show status update destroy]
 
   def index
