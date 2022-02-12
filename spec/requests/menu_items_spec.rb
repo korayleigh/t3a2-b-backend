@@ -5,6 +5,13 @@ require 'rails_helper'
 api_path = '/api/menu_items'
 
 RSpec.describe 'Menu Items:', type: :request do
+  before do
+    admin_role = FactoryBot.create(:role, name: 'Admin')
+    employee = FactoryBot.build(:employee, role: admin_role)
+    admin = FactoryBot.create(:user, :admin, userable: employee)
+    sign_in admin
+  end
+
   describe 'index:' do
     before do
       create_list(:menu_item, 5)

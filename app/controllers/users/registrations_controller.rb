@@ -4,19 +4,30 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
+  before_action :authenticate_user!, only: [:show]
+
   # GET /resource/sign_up
   # def new
   #   super
   # end
 
+  def show
+    render json: {
+      email: current_user.email,
+      role: current_user.userable.is_a?(Employee) ? current_user.userable.role.name : 'customer'
+    }, status: :ok
+  end
+
   # POST /resource
   def create
     # super
-    if User.find_by(email: params[:email])
-      render json: { error: 'User already exists' }, status: :unprocessable_entity
-      return
+    @user = User.create(customer_params.merge(userable: Customer.new))
+
+    if @user.errors.any?
+      render json: { error: @user.errors }, status: :unprocessable_entity
+    else
+      render json: @user, status: :created
     end
-    @user = User.create!(customer_params.merge(userable: Customer.new))
   end
 
   # GET /resource/edit

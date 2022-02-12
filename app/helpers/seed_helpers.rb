@@ -42,6 +42,7 @@ class SeedHelpers
   end
 
   def seed_production
+    seed_roles
     seed_users
   end
 
@@ -195,6 +196,8 @@ class SeedHelpers
     admin_role.permissions.push(write_users_permission, write_orders_permission, write_menu_permission)
     # puts 'created Role: Admin'
 
+    return if Rails.env.production?
+
     manager_role = Role.create!(name: 'Manager')
     manager_role.permissions.push(write_orders_permission, write_menu_permission)
     # puts 'created Role: Manager'
@@ -236,6 +239,11 @@ class SeedHelpers
                  first_name: 'Waiter', last_name: 'User', email: 'waiter@mexiqui.to',
                  password: 'reallydifficultwaiterpassword', password_confirmation: 'reallydifficultwaiterpassword')
     # puts 'created Waiter User'
+
+    User.create!(userable: Customer.new,
+                 first_name: 'Ezio', last_name: 'Auditore', email: 'ezio@monteriggioni.it',
+                 password: 'nothingistrueeverythingispermitted', password_confirmation: 'nothingistrueeverythingispermitted')
+    # puts 'created Customer'
   end
 
   def seed_orders
