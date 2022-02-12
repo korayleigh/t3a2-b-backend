@@ -42,6 +42,7 @@ class SeedHelpers
   end
 
   def seed_production
+    seed_permissions
     seed_roles
     seed_users
   end
