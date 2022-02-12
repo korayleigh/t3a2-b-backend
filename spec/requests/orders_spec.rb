@@ -35,7 +35,7 @@ RSpec.describe 'Orders:', type: :request do
     end
 
     it 'responds with the requested order' do
-      expect(JSON.parse(response.body, symbolize_names: true)).to include(order.transform_order.reject { |k, _| k == :created_at })
+      expect(JSON.parse(response.body, symbolize_names: true)).to include(order.transform_order.reject { |k, _| %i[created_at updated_at].include?(k) })
     end
     it 'responds with status: ok' do
       expect(response).to have_http_status(:ok)

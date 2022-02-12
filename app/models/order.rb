@@ -41,6 +41,7 @@ class Order < ApplicationRecord
       total: total,
       items: items,
       created_at: created_at,
+      updated_at: updated_at,
       order_items: order_items.to_h(&:transform_order_item_list)
     }
     order_hash.merge(
