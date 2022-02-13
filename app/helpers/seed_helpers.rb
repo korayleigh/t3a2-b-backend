@@ -29,6 +29,7 @@ class SeedHelpers
     seed_roles
     seed_users
     seed_orders
+    attach_images
   end
 
   def seed_development
@@ -39,18 +40,24 @@ class SeedHelpers
     seed_roles
     seed_users
     seed_orders
+    attach_images
   end
 
   def seed_production
+    seed_categories
+    seed_menu_groups
+    seed_menu_items
     seed_permissions
     seed_roles
     seed_users
+    seed_orders
+    attach_images
   end
 
   def seed_categories
     return if Category.any?
 
-    categories = %w[Entrees Tacos Mains Postres Drinks]
+    categories = %w[Tacos Entradas Grandes Postres Bebidas]
     categories.each do |category|
       Category.create(name: category)
       # puts "created Category: #{category}"
@@ -60,7 +67,7 @@ class SeedHelpers
   def seed_menu_groups
     return if MenuGroup.any?
 
-    menu_groups = %w[Milkshakes]
+    menu_groups = ['Milkshakes', 'Soft Drinks', 'Tequilas']
     menu_groups.each do |menu_group|
       MenuGroup.create(name: menu_group)
       # puts "created Menu Group: #{menu_group}"
@@ -70,104 +77,203 @@ class SeedHelpers
   def seed_menu_items
     return if MenuItem.any?
 
-    entree_category = Category.find_by!(name: 'Entrees')
-    MenuItem.create!(name: 'Papas Fritas', price: 1200,
-                     description: 'Crispy fried potatoes, salsa roja, maggi aioli',
-                     category: entree_category)
-    # puts 'created MenuItem: Papas Fritas'
-    MenuItem.create!(name: 'Chilaquiles', price: 900,
-                     description: 'Tortilla chips, salsa roja, house mix cheeses, crema',
-                     category: entree_category)
-    # puts 'created MenuItem: Chilaquiles'
-    MenuItem.create!(name: 'Guacamole', price: 950,
-                     description: 'Crushed avocado, tomato, onion, chile, coriander and lime juice',
-                     category: entree_category)
-    # puts 'created MenuItem: Guacamole'
-
     tacos_category = Category.find_by!(name: 'Tacos')
     MenuItem.create!(name: 'Al Pastor', price: 600,
                      description: 'Free-range spiced pork, achiote, guajillo chile, pineapple-habanero sala',
                      category: tacos_category)
-    # puts 'created MenuItem: Al Pastor'
     MenuItem.create!(name: 'Carne Asada', price: 600,
                      description: 'Marinated grilled beef, fresh-herb salsa',
                      category: tacos_category)
-    # puts 'created MenuItem: Carne Asada'
     MenuItem.create!(name: 'Pescado', price: 650,
                      description: 'Corn battered fish, jalapeño mayo, coleslaw salad, pico de gallo',
                      category: tacos_category)
-    # puts 'created MenuItem: Pescado'
     MenuItem.create!(name: 'Tinga de Pollo', price: 600,
                      description: 'Free-range chicken, chipotle-tomato salsa, black beans',
                      category: tacos_category)
-    # puts 'created MenuItem: Tinga de Pollo'
+    MenuItem.create!(name: 'Wagyu Beef', price: 600,
+                     description: 'Wagyu beef brisked, pickled red radish, salsa verde',
+                     category: tacos_category)
+    MenuItem.create!(name: 'De Frijoles', price: 600,
+                     description: 'Fried beans and salsa',
+                     category: tacos_category)
 
-    main_category = Category.find_by!(name: 'Mains')
+    entree_category = Category.find_by!(name: 'Entradas')
+    MenuItem.create!(name: 'Papas Fritas', price: 1200,
+                     description: 'Crispy fried potatoes, salsa roja, maggi aioli',
+                     category: entree_category)
+    MenuItem.create!(name: 'Chilaquiles', price: 900,
+                     description: 'Tortilla chips, salsa verde, house mix cheeses, crema',
+                     category: entree_category)
+    MenuItem.create!(name: 'Guacamole', price: 950,
+                     description: 'Crushed avocado, tomato, onion, chile, coriander and lime juice',
+                     category: entree_category)
+    MenuItem.create!(name: 'Beef Cheek Empanadas', price: 900,
+                     description: 'Beef cheek and black bean empanadas served with sour cream',
+                     category: entree_category)
+    MenuItem.create!(name: 'Ocean Trout Ceviche', price: 2400,
+                     description: 'Fresh caught ocean trout Ceviche with grapefruit, avocado and pickled cucumber',
+                     category: entree_category)
+    MenuItem.create!(name: 'Kingfish Tostada', price: 1000,
+                     description: 'Kingfish Tostada with cucumber and habanero salsa',
+                     category: entree_category)
+    MenuItem.create!(name: 'Watermelon Salad', price: 1800,
+                     description: 'With Queso Fresco, Mint & Lime',
+                     category: entree_category)
+    MenuItem.create!(name: 'Corn', price: 1400,
+                     description: 'With Paprika Butter & Manchego Cheese',
+                     category: entree_category)
+
+    grandes_categories = Category.find_by!(name: 'Grandes')
     MenuItem.create!(name: 'Carnitas', price: 4000,
                      description: 'Wood roasted pork belly, hibiscus and plum chamoy',
-                     category: main_category)
-    # puts 'created MenuItem: Carnitas'
-    MenuItem.create!(name: 'Pescado a ala parrilla', price: 2400,
+                     category: grandes_categories)
+    MenuItem.create!(name: 'Pescado a la Parrilla', price: 2400,
                      description: 'Whole grilled flathead, ajo blanco, pistacchio crumb',
-                     category: main_category)
-    # puts 'created MenuItem: Beef Burger'
+                     category: grandes_categories)
+    MenuItem.create!(name: 'BBQ Achiote Spatchcock', price: 4200,
+                     description: 'Served black garlic, grilled corn, roast pineapple',
+                     category: grandes_categories)
+    MenuItem.create!(name: 'Lamb Barbacoa', price: 2400,
+                     description: 'Served with chilli, lime creme fraiche, fresh coorn tortillas',
+                     category: grandes_categories)
 
     postres_category = Category.find_by!(name: 'Postres')
     MenuItem.create!(name: 'Churros', price: 1200,
                      description: 'Churros with bourbon caramel',
                      category: postres_category)
-    # puts 'created MenuItem: Churros'
     MenuItem.create!(name: 'Flan', price: 1000,
                      description: 'Flan de naranja tradicional',
                      category: postres_category)
-    # puts 'created MenuItem: Flan'
-    MenuItem.create!(name: 'Pastel de elote', price: 1000,
+    MenuItem.create!(name: 'Pastel de Elote', price: 1000,
                      description: 'Corn cake with dulce de leche atole',
                      category: postres_category)
-    # puts 'created MenuItem: Pastel de elote'
 
-    drinks_category = Category.find_by!(name: 'Drinks')
-    milkshakes_group = MenuGroup.find_by!(name: 'Milkshakes')
+    bebidas_category = Category.find_by!(name: 'Bebidas')
+    # milkshakes_group = MenuGroup.find_by!(name: 'Milkshakes')
+
+    # GroupMenuItem.create!(
+    #   menu_group: milkshakes_group,
+    #   menu_item: MenuItem.create!(
+    #     name: 'Chocolate Milkshake', price: 900,
+    #     description: "It's a chocolate milkshake", category: bebidas_category
+    #   ),
+    #   variant_name: 'Chocolate'
+    # )
+    # # puts 'created MenuItem: Chocolate Milkshake'
+
+    # GroupMenuItem.create!(
+    #   menu_group: milkshakes_group,
+    #   menu_item: MenuItem.create!(
+    #     name: 'Strawberry Milkshake', price: 900,
+    #     description: "It's a strawberry milkshake", category: bebidas_category
+    #   ),
+    #   variant_name: 'Strawberry'
+    # )
+    # # puts 'created MenuItem: Strawberry Milkshake'
+
+    # GroupMenuItem.create!(
+    #   menu_group: milkshakes_group,
+    #   menu_item: MenuItem.create!(
+    #     name: 'Banana Milkshake', price: 900,
+    #     description: "It's a banana milkshake", category: bebidas_category
+    #   ),
+    #   variant_name: 'Banana'
+    # )
+    # # puts 'created MenuItem: Banana Milkshake'
+
+    # GroupMenuItem.create!(
+    #   menu_group: milkshakes_group,
+    #   menu_item: MenuItem.create!(
+    #     name: 'Caramel Milkshake', price: 900,
+    #     description: "It's a caramel milkshake", category: bebidas_category
+    #   ),
+    #   variant_name: 'Caramel'
+    # )
+    # # puts 'created MenuItem: Caramel Milkshake'
+
+    soft_drinks_group = MenuGroup.find_by!(name: 'Soft Drinks')
 
     GroupMenuItem.create!(
-      menu_group: milkshakes_group,
+      menu_group: soft_drinks_group,
       menu_item: MenuItem.create!(
-        name: 'Chocolate Milkshake', price: 900,
-        description: "It's a chocolate milkshake", category: drinks_category
+        name: 'Coca Cola', price: 400,
+        description: 'Fizzy cola', category: bebidas_category
       ),
-      variant_name: 'Chocolate'
+      variant_name: 'Coca Cola'
     )
-    # puts 'created MenuItem: Chocolate Milkshake'
+    # puts 'created MenuItem: Coca Cola'
 
     GroupMenuItem.create!(
-      menu_group: milkshakes_group,
+      menu_group: soft_drinks_group,
       menu_item: MenuItem.create!(
-        name: 'Strawberry Milkshake', price: 900,
-        description: "It's a strawberry milkshake", category: drinks_category
+        name: 'Coke No Sugar', price: 400,
+        description: 'Coke Zero was nicer', category: bebidas_category
       ),
-      variant_name: 'Strawberry'
+      variant_name: 'Coke No Sugar'
     )
-    # puts 'created MenuItem: Strawberry Milkshake'
+    # puts 'created MenuItem: Coke No Sugar'
 
     GroupMenuItem.create!(
-      menu_group: milkshakes_group,
+      menu_group: soft_drinks_group,
       menu_item: MenuItem.create!(
-        name: 'Banana Milkshake', price: 900,
-        description: "It's a banana milkshake", category: drinks_category
+        name: 'Sprite', price: 400,
+        description: 'Fizzy lemonade', category: bebidas_category
       ),
-      variant_name: 'Banana'
+      variant_name: 'Sprite'
     )
-    # puts 'created MenuItem: Banana Milkshake'
+    # puts 'created MenuItem: Sprite'
 
     GroupMenuItem.create!(
-      menu_group: milkshakes_group,
+      menu_group: soft_drinks_group,
       menu_item: MenuItem.create!(
-        name: 'Caramel Milkshake', price: 900,
-        description: "It's a caramel milkshake", category: drinks_category
+        name: 'Fanta', price: 400,
+        description: 'Fizzy orange', category: bebidas_category
       ),
-      variant_name: 'Caramel'
+      variant_name: 'Fanta'
     )
-    # puts 'created MenuItem: Caramel Milkshake'
+    # puts 'created MenuItem: Sprite'
+
+    tequilas_group = MenuGroup.find_by!(name: 'Tequilas')
+
+    GroupMenuItem.create!(
+      menu_group: tequilas_group,
+      menu_item: MenuItem.create!(
+        name: 'Arette Blanco', price: 1300,
+        description: 'Floral, fruity notes, pepper, earth, light smoke', category: bebidas_category
+      ),
+      variant_name: 'Arette Blanco'
+    )
+    # puts 'created MenuItem: Coca Cola'
+
+    GroupMenuItem.create!(
+      menu_group: tequilas_group,
+      menu_item: MenuItem.create!(
+        name: 'Fortaleza Reposado', price: 2000,
+        description: 'Soft, citrus & caramel, butter, vanilla, apple', category: bebidas_category
+      ),
+      variant_name: 'Fortaleza Reposado'
+    )
+    # puts 'created MenuItem: Coke No Sugar'
+
+    GroupMenuItem.create!(
+      menu_group: tequilas_group,
+      menu_item: MenuItem.create!(
+        name: 'Cascahuin Tahona Blanco', price: 1900,
+        description: 'Umami, cheese, baked agave, green capsicum', category: bebidas_category
+      ),
+      variant_name: 'Cascahuin Tahona Blanco'
+    )
+    # puts 'created MenuItem: Sprite'
+
+    GroupMenuItem.create!(
+      menu_group: tequilas_group,
+      menu_item: MenuItem.create!(
+        name: 'Calle 23 Blanco', price: 1400,
+        description: 'Agave, citrus, apple, pear & black pepper spice', category: bebidas_category
+      ),
+      variant_name: 'Calle 23 Blanco'
+    )
+    # puts 'created MenuItem: Sprite'
   end
 
   def seed_permissions
@@ -196,8 +302,6 @@ class SeedHelpers
     admin_role = Role.create!(name: 'Admin')
     admin_role.permissions.push(write_users_permission, write_orders_permission, write_menu_permission)
     # puts 'created Role: Admin'
-
-    return if Rails.env.production?
 
     manager_role = Role.create!(name: 'Manager')
     manager_role.permissions.push(write_orders_permission, write_menu_permission)
@@ -250,7 +354,9 @@ class SeedHelpers
   def seed_orders
     return if Order.any?
 
-    first_order = Order.create!(table: 0, name: 'Bob', email: 'bob@test.com')
+    # ORDER 1
+
+    first_order = Order.create!(table: 0, name: 'Ezio', email: 'ezio@monteriggioni.it')
     # puts 'created a new Order'
 
     papas_fritas_menu_item = MenuItem.find_by!(name: 'Papas Fritas')
@@ -267,6 +373,86 @@ class SeedHelpers
     first_order.save!
 
     first_order.update!(updated_by: User.employees.find_by(first_name: 'Manager'))
+
+    # ORDER 2
+
+    second_order = Order.create!(table: 3, name: 'Koray', email: 'koray@test.com')
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Al Pastor'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Carne Asada'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Coca Cola'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Pastel de Elote'))
+    second_order.save!
+
+    # ORDER 3
+
+    second_order = Order.create!(table: 5, name: 'Leigh', email: 'leigh@test.com')
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Chilaquiles'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Pescado'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Carnitas'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Coke No Sugar'))
+    second_order.save!
+
+    # ORDER 4
+
+    second_order = Order.create!(table: 2, name: 'Iryna', email: 'iryna@test.com')
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Wagyu Beef'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Tinga de Pollo'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Lamb Barbacoa'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Flan'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Cascahuin Tahona Blanco'))
+    second_order.save!
+
+    # ORDER 5
+
+    second_order = Order.create!(table: 6, name: 'JK', email: 'jk@test.com')
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Papas Fritas'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Tinga de Pollo'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Carnitas'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Al Pastor'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'BBQ Achiote Spatchcock'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Coca Cola'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Calle 23 Blanco'))
+    second_order.save!
+
+    # ORDER 6
+
+    second_order = Order.create!(table: 1, name: 'Jarrod', email: 'jarrod@test.com')
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Guacamole'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Papas Fritas'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Pescado'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Tinga de Pollo'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Beef Cheek Empanadas'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Pescado a la Parrilla'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'De Frijoles'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Churros'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Flan'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Sprite'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Fortaleza Reposado'))
+    second_order.save!
+  end
+
+  def attach_images
+    images = Dir[Rails.root.join('app', 'helpers', 'seed_data', 'images', 'menu_item_*.*')]
+    puts "Found #{images.length} images"
+
+    images.each do |image|
+      basename = File.basename(image)
+
+      regex = /menu_item_(?<menu_item_name>.*)\.(?<image_extension>[a-z]{1,4})/
+
+      matches = basename.match(regex)
+      menu_item_name = matches[:menu_item_name]
+      image_extension = matches[:image_extension]
+
+      raise StandError, "Couldn't regex match menu_item_name from filename #{basename}" if menu_item_name.empty? || image_extension.empty?
+
+      menu_item = MenuItem.find_by!(name: menu_item_name)
+      puts "Menu Item: #{menu_item_name}"
+      unless menu_item.image.attached?
+        menu_item.image.attach(io: File.open(image), filename: basename)
+        puts "Attached image for #{menu_item.name}"
+      end
+    end
   end
 end
 
