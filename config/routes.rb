@@ -17,8 +17,11 @@ Rails.application.routes.draw do
 
     get '/menu_grouped', to: 'menu_items#index_grouped'
     resources :menu_items, only: %i[index show create update destroy]
+    get '/orders/status/:id', to: 'orders#status'
     resources :orders, only: %i[index show create update destroy]
     get '/tables', to: 'orders#tables'
+    get '/order_items/pending', to: 'order_items#pending'
+    post '/order_items/pending_advance/:id', to: 'order_items#pending_advance'
     resources :order_items, only: %i[index show create update destroy]
     get '/statuses', to: 'order_items#statuses'
     resources :categories, only: %i[index show create update destroy]

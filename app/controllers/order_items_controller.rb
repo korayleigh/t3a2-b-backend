@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class OrderItemsController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
-  before_action :set_order_item, only: %i[show update destroy]
+  before_action :authenticate_user!
+  before_action :set_order_item, only: %i[show update destroy pending_advance]
 
   def index
     render json: OrderItem.all.to_h(&:transform_order_item_list), status: :ok
@@ -29,6 +29,22 @@ class OrderItemsController < ApplicationController
 
   def statuses
     render json: OrderItem.statuses, status: :ok
+  end
+
+  def pending
+    render json: OrderItem.pending.to_h(&:transform_order_item_list), status: :ok
+  end
+
+  def pending_advance
+    if @order_item.received?
+      @order_item.update(status: :in_progress)
+    elsif @order_item.in_progress?
+      @order_item.update(status: :complete)
+    end
+
+    headers['Last-Modified'] = Time.now.httpdate
+    # render_json(:ok)
+    render json: OrderItem.pending.to_h(&:transform_order_item_list), status: :ok
   end
 
   private
