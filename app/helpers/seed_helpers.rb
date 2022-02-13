@@ -149,47 +149,6 @@ class SeedHelpers
                      category: postres_category)
 
     bebidas_category = Category.find_by!(name: 'Bebidas')
-    # milkshakes_group = MenuGroup.find_by!(name: 'Milkshakes')
-
-    # GroupMenuItem.create!(
-    #   menu_group: milkshakes_group,
-    #   menu_item: MenuItem.create!(
-    #     name: 'Chocolate Milkshake', price: 900,
-    #     description: "It's a chocolate milkshake", category: bebidas_category
-    #   ),
-    #   variant_name: 'Chocolate'
-    # )
-    # # puts 'created MenuItem: Chocolate Milkshake'
-
-    # GroupMenuItem.create!(
-    #   menu_group: milkshakes_group,
-    #   menu_item: MenuItem.create!(
-    #     name: 'Strawberry Milkshake', price: 900,
-    #     description: "It's a strawberry milkshake", category: bebidas_category
-    #   ),
-    #   variant_name: 'Strawberry'
-    # )
-    # # puts 'created MenuItem: Strawberry Milkshake'
-
-    # GroupMenuItem.create!(
-    #   menu_group: milkshakes_group,
-    #   menu_item: MenuItem.create!(
-    #     name: 'Banana Milkshake', price: 900,
-    #     description: "It's a banana milkshake", category: bebidas_category
-    #   ),
-    #   variant_name: 'Banana'
-    # )
-    # # puts 'created MenuItem: Banana Milkshake'
-
-    # GroupMenuItem.create!(
-    #   menu_group: milkshakes_group,
-    #   menu_item: MenuItem.create!(
-    #     name: 'Caramel Milkshake', price: 900,
-    #     description: "It's a caramel milkshake", category: bebidas_category
-    #   ),
-    #   variant_name: 'Caramel'
-    # )
-    # # puts 'created MenuItem: Caramel Milkshake'
 
     soft_drinks_group = MenuGroup.find_by!(name: 'Soft Drinks')
 

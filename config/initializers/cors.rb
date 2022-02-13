@@ -11,10 +11,8 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     if Rails.env.production?
       origins 'mexiqui.to', %r{\Ahttps://deploy-preview-\d+--korayleigh.netlify.app\z}
-      # puts 'cors origin: mexiqui.to'
     else
       origins '*'
-      # puts 'cors origin: *'
     end
 
     resource '*',

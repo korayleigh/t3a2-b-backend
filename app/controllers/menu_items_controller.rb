@@ -7,15 +7,10 @@ class MenuItemsController < ApplicationController
   wrap_parameters include: MenuItem.attribute_names + ['image']
 
   def index
-    # render json: MenuItem.visible.to_h(&:transform_menu_item_list), status: :ok
     render json: MenuItem.visible, status: :ok
-    # render json: MenuItem.all
   end
 
   def show
-    # render json: MenuItem.visible.to_h(&:transform_menu_item_list), status: :ok
-    puts("id: #{@menu_item.id}")
-    # path = Rails.application.routes.url_helpers.rails_blob_path(@menu_item.image, only_path: true)
     render json: url_for(@menu_item.image), status: :ok
   end
 
