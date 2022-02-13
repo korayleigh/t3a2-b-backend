@@ -36,7 +36,6 @@ class MenuItem < ApplicationRecord
   def self.grouped_menu_items
     menu_groups_response_hash = MenuGroup.all.map do |menu_group|
       menu_group_hash = menu_group.group_menu_items.visible.to_h do |group_menu_item|
-        puts group_menu_item
         [group_menu_item.variant_name, group_menu_item.menu_item.transform_menu_item]
       end
       { type: menu_group.class.name, group: menu_group_hash }
