@@ -206,16 +206,6 @@ class SeedHelpers
     GroupMenuItem.create!(
       menu_group: soft_drinks_group,
       menu_item: MenuItem.create!(
-        name: 'Coke No Sugar', price: 400,
-        description: 'Coke Zero was nicer', category: bebidas_category
-      ),
-      variant_name: 'Coke No Sugar'
-    )
-    # puts 'created MenuItem: Coke No Sugar'
-
-    GroupMenuItem.create!(
-      menu_group: soft_drinks_group,
-      menu_item: MenuItem.create!(
         name: 'Sprite', price: 400,
         description: 'Fizzy lemonade', category: bebidas_category
       ),
@@ -231,7 +221,7 @@ class SeedHelpers
       ),
       variant_name: 'Fanta'
     )
-    # puts 'created MenuItem: Sprite'
+    # puts 'created MenuItem: Fanta'
 
     tequilas_group = MenuGroup.find_by!(name: 'Tequilas')
 
@@ -243,7 +233,7 @@ class SeedHelpers
       ),
       variant_name: 'Arette Blanco'
     )
-    # puts 'created MenuItem: Coca Cola'
+    # puts 'created MenuItem: Arette Blanco'
 
     GroupMenuItem.create!(
       menu_group: tequilas_group,
@@ -253,7 +243,7 @@ class SeedHelpers
       ),
       variant_name: 'Fortaleza Reposado'
     )
-    # puts 'created MenuItem: Coke No Sugar'
+    # puts 'created MenuItem: Fortaleza Reposado'
 
     GroupMenuItem.create!(
       menu_group: tequilas_group,
@@ -263,7 +253,7 @@ class SeedHelpers
       ),
       variant_name: 'Cascahuin Tahona Blanco'
     )
-    # puts 'created MenuItem: Sprite'
+    # puts 'created MenuItem: Cascahuin Tahona Blanco'
 
     GroupMenuItem.create!(
       menu_group: tequilas_group,
@@ -273,7 +263,7 @@ class SeedHelpers
       ),
       variant_name: 'Calle 23 Blanco'
     )
-    # puts 'created MenuItem: Sprite'
+    # puts 'created MenuItem: Calle 23 Blanco'
   end
 
   def seed_permissions
@@ -389,7 +379,7 @@ class SeedHelpers
     OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Chilaquiles'))
     OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Pescado'))
     OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Carnitas'))
-    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Coke No Sugar'))
+    OrderItem.create!(order: second_order, menu_item: MenuItem.find_by!(name: 'Coca Cola'))
     second_order.save!
 
     # ORDER 4
