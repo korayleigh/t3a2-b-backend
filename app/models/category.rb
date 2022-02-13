@@ -8,7 +8,8 @@ class Category < ApplicationRecord
   def transform_category
     {
       id: id,
-      name: name
+      name: name,
+      menu_items_count: menu_items.length
     }
   end
 
