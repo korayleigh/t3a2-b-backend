@@ -94,7 +94,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def customer_params
-    puts params
     params.require(:registration).permit(:first_name, :last_name, :email, :password, :password_confirmation)
   end
 end
