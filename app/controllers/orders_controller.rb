@@ -16,7 +16,7 @@ class OrdersController < ApplicationController
     if @order.email == params[:email]
       render_json(:ok)
     else
-      render json: { error: 'Unauthorized' }, status: :unauthorized
+      render json: { error: 'Not Found' }, status: :not_found
     end
   end
 
